@@ -8,7 +8,6 @@ awcn_init($socket);
 awcn_loop($socket);
 awcn_disconnect($socket);
 
-
 function awcn_connect($ip, $port) {
     $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
     if ($socket === false) {
