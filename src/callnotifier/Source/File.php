@@ -13,19 +13,19 @@ class Source_File
     {
         $file = $this->config->replayFile;
         if (!file_exists($file)) {
-            throw new Exception('Replay file does not exist');
+            throw new \Exception('Replay file does not exist');
         }
 
         $handle = fopen($file, 'r');
         if (!$handle) {
-            throw new Exception('Cannot open replay file for reading');
+            throw new \Exception('Cannot open replay file for reading');
         }
 
         while (($line = fgets($handle, 4096)) !== false) {
             $this->handler->handle($line);
         }
         if (!feof($handle)) {
-            throw new Exception('unexpected fgets() fail');
+            throw new \Exception('unexpected fgets() fail');
         }
         fclose($handle);
     }
