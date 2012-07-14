@@ -1,20 +1,19 @@
 <?php
 namespace callnotifier;
 
-class Socket
+class Source_Remote
 {
     protected $socket;
-    public $ip = null;
-    public $port = 42225;
 
-    public function __construct($ip)
+    public function __construct($config, $handler)
     {
-        $this->ip = $ip;
+        $this->config  = $config;
+        $this->handler = $handler;
     }
 
     public function run()
     {
-        $this->connect($this->ip, $this->port);
+        $this->connect($this->config->host, $this->config->port);
         $this->init();
         $this->loop();
         $this->disconnect();
@@ -54,9 +53,10 @@ class Socket
         while (true) {
             $dbgmsg = $this->read_response();
             //echo $dbgmsg . "\n";
-            $this->handle_msg($dbgmsg);
+            $this->handler->handle($dbgmsg);
         }
     }
+
     function read_response()
     {
         $res = socket_read($this->socket, 2048, PHP_NORMAL_READ);
@@ -68,33 +68,6 @@ class Socket
         socket_write($this->socket, "\x00\x03", 2);
         socket_close($this->socket);
     }
-
-    function handle_msg($msg)
-    {
-        if (substr($msg, 0, 9) != '[DKANPROT') {
-            //unknown message type
-            return;
-        }
-        $regex = '#^\\[DKANPROT-([^ ]+) ([0-9]+)\\] (.*)$#';
-        if (!preg_match($regex, $msg, $matches)) {
-            //message should always be that way
-            return false;
-        }
-        list(, $type, $someid, $details) = $matches;
-
-        if ($type != 'Info') {
-            //we only want info messages
-            var_dump($type . ': ' . $details);
-            return;
-        }
-        //Vegw/Ets-Cref:[0xffef]/[0x64] - VEGW_SETUP from upper layer to internal destination: CGPN[**22]->CDPN[41], 
-        var_dump($details);
-        $regex = '#CGPN\\[([^\\]]+)\\]->CDPN\\[([^\\]]+)\\]#';
-        if (preg_match($regex, $details, $matches)) {
-            var_dump('a call!', $matches);
-        }
-    }
-
 
 }
 
