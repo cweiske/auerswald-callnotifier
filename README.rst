@@ -19,3 +19,10 @@ Issues
 Ctrl+C does not send the disconnect command.
 This is a problem with PHP since pcntl_signal handling and blocking sockets
 do not work together. The signal will not be handled.
+
+
+Source
+======
+Original git website: http://git.cweiske.de/?p=auerswald-callnotifier.git
+
+Mirror: https://github.com/cweiske/auerswald-callnotifier
