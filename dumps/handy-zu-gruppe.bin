@@ -1,0 +1,75 @@
+[DKANPROT-Debug 760966] N01: 02 97 01 DF FF 0A
+[DKANPROT-Debug 763702] T01: 02 97 01 9D FF 0A
+[DKANPROT-Debug 150949] N01: 02 FF FF 03 08 01 01 05 A1 04 03 80 90 A3 18 01 89 6C 0C 21 83 31 36 33 34 37 37 39 38 37 38 70 06 C1 34 30 38 36 32 7D 02 91 81 FF 0A
+[DKANPROT-Debug 261657] RXMSG KREVENT_SETUP Task 0x4d class L6MGR[0x0]
+[DKANPROT-Debug 263893] RXMSG KREVENT_ERSTAUFRUF ohne task, class KREIS[0x1]
+[DKANPROT-Info 264954] KR_TXMSG_SETUP ueber task 0x4e von tnid 0x10 (RN ) an port 0x10 (S 0 P 4)
+[DKANPROT-Info 267917] KR_TXMSG_PROCEED ueber task 0x4d von tnid 0x13 (RN ) an port 0x13 (S 2 P 0)
+[DKANPROT-Info 268670] RXMSG KREVENT_CALLPROC Slot 0x0 Port 0x4 Task 0x4e kreis 0x1 = class_inst, class_type=1
+[DKANPROT-Debug 269514] T01: 00 97 DE 9C 08 01 81 02 FF 0A
+[DKANPROT-Info 372949] KR_TXMSG_SETUP ueber task 0x4f von tnid 0x18 (RN 21) an port 0x15 (S 3 P 1)
+[DKANPROT-Debug 375079] RXMSG KREVENT_ALERTING Task 0x4f class RE_Base[0x1a]
+[DKANPROT-Debug 375422] RXMSG KREVENT_RE_CTRL_CB ohne task, class RECTRL[0x12]
+[DKANPROT-Info 375848] RXMSG KREVENT_ALERTING Slot 0x0 Port 0x4 Task 0x4e kreis 0x1 = class_inst, class_type=1
+[DKANPROT-Info 376250] KR_TXMSG_ALERT ueber task 0x4d von tnid 0x13 (RN ) an port 0x13 (S 2 P 0)
+[DKANPROT-Debug 377391] N01: 00 97 01 E0 FF 0A
+[DKANPROT-Debug 378613] T01: 00 97 E0 9C 08 01 81 01 FF 0A
+[DKANPROT-Info 481718] KR_TXMSG_SETUP ueber task 0x50 von tnid 0x1b (RN 40) an port 0xe (S 0 P 2)
+[DKANPROT-Info 485903] KR_TXMSG_SETUP ueber task 0x51 von tnid 0x1c (RN 41) an port 0xe (S 0 P 2)
+[DKANPROT-Info 488684] KR_TXMSG_SETUP ueber task 0x52 von tnid 0x19 (RN 22) an port 0x12 (S 1 P 0)
+[DKANPROT-Debug 490036] N01: 00 97 01 E2 FF 0A
+[DKANPROT-Debug 491453] N02: 02 FF FF 03 08 01 1A 05 04 03 80 90 A3 18 01 89 28 0F 43 68 72 69 73 74 69 61 6E 20 48 61 6E 64 79 6C 0C 21 80 31 36 33 34 37 37 39 38 37 38 70 03 81 32 32 7D 02 91 81 FF 0A
+[DKANPROT-Info 492533] VegwCref: [0xffdf] call counter [1:7] [+]
+[DKANPROT-Info 492775] Vegw/Ets-Cref:[0xffdf]/[0x50] - VEGW_SETUP from upper layer to internal destination: CGPN[01634779878]->CDPN[40], slot[0], b_kanal[1], service_typ[0], anon[0], block[0], to[0]
+[DKANPROT-Info 498613] VegwCref: [0xffde] call counter [2:6] [+]
+[DKANPROT-Info 498887] Vegw/Ets-Cref:[0xffde]/[0x51] - VEGW_SETUP from upper layer to internal destination: CGPN[01634779878]->CDPN[41], slot[0], b_kanal[1], service_typ[0], anon[0], block[0], to[0]
+[DKANPROT-Info 502675] Vegw/Ets-Cref:[0xffdf]/[0x50] - Sending VEGW_RELEASE to upper layer
+[DKANPROT-Debug 593359] RXMSG KREVENT_RELEASE_COMP Task 0x50 class RE_Base[0x14]
+[DKANPROT-Info 593901] KR_TXMSG_TAPI_STATE_FORCE ueber task 0x50 von tnid 0x1b (RN 40) an port 0xe (S 0 P 2)
+[DKANPROT-Debug 594490] RXMSG KREVENT_RE_CTRL_CB ohne task, class RECTRL[0x14]
+[DKANPROT-Info 597477] Vegw/Ets-Cref:[0xffdf]/[0x50] - VEGW_RELCOMP from ETS
+[DKANPROT-Info 597814] VegwCref: [0xffdf] call counter [1] [-]
+[DKANPROT-Debug 811200] T02: 00 A3 7F FF 0A
+[DKANPROT-Debug 811807] N02: 00 A3 73 FF 0A
+[DKANPROT-Debug 921040] T02: 00 A3 00 00 08 01 9A 02 FF 0A
+[DKANPROT-Debug 921664] N02: 00 A3 01 02 FF 0A
+[DKANPROT-Debug 922812] RXMSG KREVENT_CALLPROC Task 0x52 class RE_Base[0x16]
+[DKANPROT-Debug 140919] RXMSG KREVENT_KRTIM2 ohne task, class KREIS[0x1]
+[DKANPROT-Debug 581778] T02: 00 A3 02 00 08 01 9A 01 FF 0A
+[DKANPROT-Debug 582372] N02: 00 A3 01 04 FF 0A
+[DKANPROT-Debug 583691] RXMSG KREVENT_ALERTING Task 0x52 class RE_Base[0x16]
+[DKANPROT-Debug 241188] RXMSG KREVENT_KRTIM2 ohne task, class KREIS[0x1]
+[DKANPROT-Debug 121114] RXMSG KREVENT_KRTIM2 ohne task, class KREIS[0x1]
+[DKANPROT-Debug 121698] N01: 02 97 9C E2 08 01 01 4D 08 02 80 90 FF 0A
+[DKANPROT-Debug 122232] T01: 02 97 01 9E FF 0A
+[DKANPROT-Debug 124323] T01: 00 97 E2 9E 08 01 81 5A FF 0A
+[DKANPROT-Info 124928] RXMSG KREVENT_RELEASE Slot 0x2 Port 0x0 Task 0x4d kreis 0x1 = class_inst, class_type=1
+[DKANPROT-Info 129931] KR_TXMSG_TAPI_STATE_FORCE ueber task 0x4d von tnid 0x13 (RN ) an port 0x13 (S 2 P 0)
+[DKANPROT-Info 130778] KR_TXMSG_RELCOMP ueber task 0x4d von tnid 0x13 (RN ) an port 0x13 (S 2 P 0)
+[DKANPROT-Debug 131993] RXMSG KREVENT_ERSTAUFRUF ohne task, class KREIS[0x1]
+[DKANPROT-Info 132360] KR_TXMSG_DISC_REQ ueber task 0x4e von tnid 0x10 (RN ) an port 0x10 (S 0 P 4)
+[DKANPROT-Info 231159] KR_TXMSG_DISC_REQ ueber task 0x51 von tnid 0x1c (RN 41) an port 0xe (S 0 P 2)
+[DKANPROT-Info 233929] Vegw/Ets-Cref:[0xffde]/[0x51] - VEGW_RELEASE from ETS - cause 16
+[DKANPROT-Info 236749] Vegw/Ets-Cref:[0xffde]/[0x51] - Sending VEGW_RELCOMP to upper layer
+[DKANPROT-Info 237154] VegwCref: [0xffde] call counter [0] [-]
+[DKANPROT-Info 242110] KR_TXMSG_TAPI_STATE_FORCE ueber task 0x51 von tnid 0x1c (RN 41) an port 0xe (S 0 P 2)
+[DKANPROT-Info 242898] KR_TXMSG_DISC_REQ ueber task 0x4f von tnid 0x18 (RN 21) an port 0x15 (S 3 P 1)
+[DKANPROT-Info 245208] KR_TXMSG_TAPI_STATE_FORCE ueber task 0x4f von tnid 0x18 (RN 21) an port 0x15 (S 3 P 1)
+[DKANPROT-Info 245959] KR_TXMSG_DISC_REQ ueber task 0x52 von tnid 0x19 (RN 22) an port 0x12 (S 1 P 0)
+[DKANPROT-Info 247165] KR_TXMSG_TAPI_STATE_FORCE ueber task 0x52 von tnid 0x19 (RN 22) an port 0x12 (S 1 P 0)
+[DKANPROT-Debug 247817] RXMSG KREVENT_RELEASE Task 0x4f class RE_Base[0x1a]
+[DKANPROT-Info 248456] KR_TXMSG_TAPI_STATE_FORCE ueber task 0x4f von tnid 0x18 (RN 21) an port 0x15 (S 3 P 1)
+[DKANPROT-Info 248856] KR_TXMSG_RELCOMP ueber task 0x4f von tnid 0x18 (RN 21) an port 0x15 (S 3 P 1)
+[DKANPROT-Debug 251566] N01: 00 97 01 E4 FF 0A
+[DKANPROT-Debug 253744] N02: 02 A3 00 04 08 01 1A 4D 08 02 81 90 FF 0A
+[DKANPROT-Debug 254250] RXMSG KREVENT_RELEASE_COMP Task 0x51 class RE_Base[0x18]
+[DKANPROT-Info 254653] KR_TXMSG_TAPI_STATE_FORCE ueber task 0x51 von tnid 0x1c (RN 41) an port 0xe (S 0 P 2)
+[DKANPROT-Debug 255198] RXMSG KREVENT_RELEASE Task 0x52 class RE_Base[0x16]
+[DKANPROT-Info 255526] KR_TXMSG_TAPI_STATE_FORCE ueber task 0x52 von tnid 0x19 (RN 22) an port 0x12 (S 1 P 0)
+[DKANPROT-Info 255904] KR_TXMSG_RELCOMP ueber task 0x52 von tnid 0x19 (RN 22) an port 0x12 (S 1 P 0)
+[DKANPROT-Debug 341224] T02: 02 A3 01 02 FF 0A
+[DKANPROT-Debug 342548] T02: 00 A3 04 02 08 01 9A 5A FF 0A
+[DKANPROT-Debug 343504] N02: 00 A3 01 06 FF 0A
+[DKANPROT-Debug 456885] RXMSG KREVENT_RELEASE Task 0x4e class L6MGR[0x0]
+[DKANPROT-Info 457274] KR_TXMSG_TAPI_STATE_FORCE ueber task 0x4e von tnid 0x10 (RN ) an port 0x10 (S 0 P 4)
+[DKANPROT-Info 457896] KR_TXMSG_RELCOMP ueber task 0x4e von tnid 0x10 (RN ) an port 0x10 (S 0 P 4)
