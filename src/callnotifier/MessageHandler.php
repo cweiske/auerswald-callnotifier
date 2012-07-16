@@ -14,7 +14,8 @@ class MessageHandler
      */
     protected $logger = array(
         'msgData' => array(),
-        'incomingCall' => array()
+        'incomingCall' => array(),
+        'edss1msg' => array(),
     );
 
 
@@ -73,7 +74,7 @@ class MessageHandler
         );
 
         if ($type != 'Info') {
-            //we only want info messages
+            $this->parseEDSS1($details);
             return;
         }
         //Vegw/Ets-Cref:[0xffef]/[0x64] - VEGW_SETUP from upper layer to internal destination: CGPN[**22]->CDPN[41], 
@@ -82,6 +83,45 @@ class MessageHandler
             list(, $from, $to) = $matches;
             $this->log('incomingCall', array('from' => $from, 'to' => $to));
         }
+    }
+
+    /**
+     * Example string: "T02: 00 A3 06 0A 08 01 01 5A FF 0A"
+     *
+     * @param string $details Detail string of a debug message
+     *
+     */
+    protected function parseEDSS1($details)
+    {
+        if ($details{0} != 'T' && $details{0} != 'N') {
+            //we only want byte data
+            return;
+        }
+        if (substr($details, 16, 4) != ' 08 ') {
+            //only E-DSS-1, no other packets
+            return;
+        }
+        
+        $bytestring = substr($details, 5);
+        $bytes = '';
+        foreach (explode(' ', $bytestring) as $strbyte) {
+            $bytes .= chr(hexdec($strbyte));
+        }
+
+        $msgtype = $bytes{7};
+        static $interestingTyps = array(
+            EDSS1_Message::SETUP,
+            EDSS1_Message::CONNECT,
+            EDSS1_Message::INFORMATION
+        );
+        if (!in_array($msgtype, $interestingTyps)) {
+            //return;
+        }
+
+        $mp = new EDSS1_Parser();
+        $msg = $mp->parse($bytes);
+
+        $this->log('edss1msg', array('msg' => $msg));
     }
 
     protected function log($type, $arData)

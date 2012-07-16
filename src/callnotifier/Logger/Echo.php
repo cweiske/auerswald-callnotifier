@@ -11,6 +11,7 @@ class Logger_Echo implements Logger
         $this->blue = $cc->convert('%b');
         $this->red = $cc->convert('%r');
         $this->white = $cc->convert('%w');
+        $this->purple = $cc->convert('%p');
     }
 
     public function log($type, $arData)
@@ -30,6 +31,25 @@ class Logger_Echo implements Logger
                     $line
                 );
                 echo $this->red . '     bytes' . $this->end . ': ' . $line . "\n";
+            }
+        } else if ($type == 'edss1msg') {
+            $msg = $arData['msg'];
+            echo sprintf(
+                $this->purple . 'EDSS1_Message' . $this->end
+                . ' type %02X '
+                . $this->purple . '%s' . $this->end
+                . ', %d parameters',
+                $msg->type,
+                $msg->getTypeName(),
+                count($msg->parameters)
+            ) . "\n";
+            foreach ($msg->parameters as $param) {
+                echo sprintf(
+                    " Parameter type %02X, %d bytes: %s\n",
+                    $param->type,
+                    $param->length,
+                    preg_replace('/[^[:print:]]/', '?', $param->data)
+                );
             }
         } else {
             echo $this->blue . $type . $this->end . ': '
