@@ -27,6 +27,19 @@ class EDSS1_Message
     public $callRef;
 
     /**
+     * Service AccessPoint Identifier
+     */
+    public $sapi;
+
+    /**
+     * Call/Response bit
+     *
+     * Is 1 when the message contains a command or
+     * the answer to a command.
+     */
+    public $callResponse;
+
+    /**
      * Terminal Endpoint Identifier (internal Telephone ID)
      *
      * @var integer

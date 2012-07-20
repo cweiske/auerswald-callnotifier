@@ -10,10 +10,16 @@ class EDSS1_Parser
     public function parse($bytes)
     {
         $m = new EDSS1_Message();
-        $m->tei = ord($bytes{1}) >> 1;//1st bit is always 1 and needs to be removed
+        $m->sapi = ord($bytes{0}) >> 2;
+        $m->callResponse = (int) ((ord($bytes{0}) & 2) == 2);
+        $m->tei  = ord($bytes{1}) >> 1;
 
         $curpos = 4;
-        list($curpos, $m->callRef) = $this->readLengthDataInt($bytes, ++$curpos);
+        list($curpos, $cCallRef, $crLen) = $this->readLengthData($bytes, ++$curpos);
+        if ($crLen == 0xFF) {
+            return $m;
+        }
+        $m->callRef = ord($cCallRef);
         //var_dump($curpos, dechex($m->callRef));
         $m->type = ord($bytes{++$curpos});
 
@@ -50,7 +56,11 @@ class EDSS1_Parser
     {
         //var_dump('old' . $curpos);
         $length = ord($bytes{$curpos});
-        $data = substr($bytes, $curpos + 1, $length);
+        if ($length != 0xFF) {
+            $data = substr($bytes, $curpos + 1, $length);
+        } else {
+            $data = null;
+        }
         return array($curpos + $length, $data, $length);
     }
 
