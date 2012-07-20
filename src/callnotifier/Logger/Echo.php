@@ -38,20 +38,29 @@ class Logger_Echo implements Logger
                 $this->purple . 'EDSS1_Message' . $this->end
                 . ' type %02X '
                 . $this->purple . '%s' . $this->end
-                . ' TEI %d, call %d'
+                . ' SAPI %d, CR %d, TEI %d, call %d'
                 . ', %d parameters',
                 $msg->type,
                 $msg->getTypeName(),
+                $msg->sapi,
+                $msg->callResponse,
                 $msg->tei,
                 $msg->callRef,
                 count($msg->parameters)
             ) . "\n";
             foreach ($msg->parameters as $param) {
                 echo sprintf(
-                    " Parameter type %02X, %d bytes: %s\n",
+                    " Parameter type %02X%s, %d bytes: %s\n",
                     $param->type,
+                    $param->title
+                    ? ' ' . $this->purple . $param->title . $this->end
+                    : '',
                     $param->length,
                     preg_replace('/[^[:print:]]/', '?', $param->data)
+                    . (isset($param->number)
+                       ? ' ' . $this->red . $param->number . $this->end
+                       : ''
+                    )
                 );
             }
         } else {

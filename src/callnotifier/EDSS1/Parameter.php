@@ -11,6 +11,21 @@ class EDSS1_Parameter
     public $type;
     public $length;
     public $data;
+
+    /**
+     * Internal title of the parameter type
+     */
+    public $title;
+
+    public function __construct($type = null)
+    {
+        $this->type = $type;
+    }
+
+    public function setData($data)
+    {
+        $this->data = $data;
+    }
 }
 
 ?>

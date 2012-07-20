@@ -31,16 +31,17 @@ class EDSS1_Parser
                 $complete = true;
                 break;
             }
-            $param = new EDSS1_Parameter();
+
+            $paramType = ord($curbit);
+            $param = $this->getParameterByType($paramType);
             $m->parameters[] = $param;
-            $param->type     = ord($curbit);
 
             //parameter length
             $curbit = $bytes{++$curpos};
             $param->length = ord($curbit);
 
             //parameter data
-            $param->data = substr($bytes, $curpos + 1, $param->length);
+            $param->setData(substr($bytes, $curpos + 1, $param->length));
             $curpos += $param->length;
         } while ($curpos < strlen($bytes) - 1);
 
@@ -65,15 +66,19 @@ class EDSS1_Parser
     }
 
     /**
-     * Read a datablock preceded with a length byte, return integer data.
-     *
-     * @return array Array with new cursor position, integer data and data length
+     * @param integer $type Parameter type ID
      */
-    public function readLengthDataInt($bytes, $curpos)
+    public function getParameterByType($type)
     {
-        $ld = $this->readLengthData($bytes, $curpos);
-        $ld[1] = ord($ld[1]);
-        return $ld;
+        $supported = array(0x28, 0x2C, 0x4C, 0x6C, 0x70);
+        if (!in_array($type, $supported)) {
+            return new EDSS1_Parameter($type);
+        }
+
+        $typeHex = sprintf('%02X', $type);
+        $class = 'callnotifier\EDSS1_Parameter_' . $typeHex;
+
+        return new $class($type);
     }
 }
 
