@@ -62,6 +62,13 @@ class Logger_Echo implements Logger
                        : ''
                     )
                 );
+                if ($param instanceof EDSS1_Parameter_INumber) {
+                    echo sprintf(
+                        "    Number type: %s, plan: %s\n",
+                        EDSS1_Parameter_Names::$numberTypes[$param->numberType],
+                        EDSS1_Parameter_Names::$numberingPlans[$param->numberingPlan]
+                    );
+                }
             }
         } else {
             echo $this->blue . $type . $this->end . ': '
