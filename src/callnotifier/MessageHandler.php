@@ -103,10 +103,7 @@ class MessageHandler
         }
         
         $bytestring = substr($details, 5);
-        $bytes = '';
-        foreach (explode(' ', $bytestring) as $strbyte) {
-            $bytes .= chr(hexdec($strbyte));
-        }
+        $bytes = static::getBytesFromHexString($bytestring);
 
         $msgtype = $bytes{7};
         static $interestingTyps = array(
@@ -135,6 +132,15 @@ class MessageHandler
                 $logger->log($type, $arData);
             }
         }
+    }
+
+    public static function getBytesFromHexString($bytestring)
+    {
+        $bytes = '';
+        foreach (explode(' ', $bytestring) as $strbyte) {
+            $bytes .= chr(hexdec($strbyte));
+        }
+        return $bytes;
     }
 
     protected function prepareDump()

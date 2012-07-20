@@ -12,11 +12,32 @@ class EDSS1_Message
     const RELEASE = "\x4D";
     const RELEASE_COMPLETE = "\x5A";
     const INFORMATION = "\x7B";
-    
+
     /**
+     * Message type, see the class constants
      * @var integer
      */
     public $type;
+
+    /**
+     * Call reference number to distinguish concurrent calls
+     *
+     * @var integer
+     */
+    public $callRef;
+
+    /**
+     * Terminal Endpoint Identifier (internal Telephone ID)
+     *
+     * @var integer
+     */
+    public $tei;
+
+    /**
+     * Array of EDSS1_Parameter objects
+     *
+     * @var array
+     */
     public $parameters = array();
 
 

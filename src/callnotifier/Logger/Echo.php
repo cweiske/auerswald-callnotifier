@@ -38,9 +38,12 @@ class Logger_Echo implements Logger
                 $this->purple . 'EDSS1_Message' . $this->end
                 . ' type %02X '
                 . $this->purple . '%s' . $this->end
+                . ' TEI %d, call %d'
                 . ', %d parameters',
                 $msg->type,
                 $msg->getTypeName(),
+                $msg->tei,
+                $msg->callRef,
                 count($msg->parameters)
             ) . "\n";
             foreach ($msg->parameters as $param) {
