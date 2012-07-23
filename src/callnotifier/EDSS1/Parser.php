@@ -19,7 +19,15 @@ class EDSS1_Parser
         if ($crLen == 0xFF) {
             return $m;
         }
-        $m->callRef = ord($cCallRef);
+        $m->callRefType = ord($cCallRef{0}) >> 7;
+        $nCallRef = ord($cCallRef{0}) & 127;
+        if ($crLen > 1) {
+            $nCallRef = ord($cCallRef{1}) + ($nCallRef << 8);
+            if ($crLen > 2) {
+                $nCallRef = ord($cCallRef{2}) + ($nCallRef << 8);
+            }
+        }
+        $m->callRef = $nCallRef;
         //var_dump($curpos, dechex($m->callRef));
         $m->type = ord($bytes{++$curpos});
 

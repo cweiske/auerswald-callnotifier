@@ -28,6 +28,17 @@ class EDSS1_Message
     public $callRef;
 
     /**
+     * If the message is from the call originating device, or the
+     * other side.
+     *
+     * - 0 = device that originated the call
+     * - 1 = device that answers to orignator requests
+     *
+     * @var integer
+     */
+    public $callRefType;
+
+    /**
      * Service AccessPoint Identifier
      *
      * @var integer
