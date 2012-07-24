@@ -1,6 +1,9 @@
 <?php
 namespace callnotifier;
 
+/**
+ * A parameter is what the specs call a "information element"
+ */
 class EDSS1_Parameter
 {
     const CALLING_PARTY_NUMBER = "\x6C";
