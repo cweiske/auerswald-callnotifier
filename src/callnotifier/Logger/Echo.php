@@ -38,7 +38,7 @@ class Logger_Echo implements Logger
                 $this->purple . 'EDSS1_Message' . $this->end
                 . ' type %02X '
                 . $this->purple . '%s' . $this->end
-                . ' SAPI %d, CR %d, TEI %d, call %d'
+                . ' SAPI %d, CR %d, TEI %d, call %d-%s'
                 . ', %d parameters',
                 $msg->type,
                 $msg->getTypeName(),
@@ -46,6 +46,7 @@ class Logger_Echo implements Logger
                 $msg->callResponse,
                 $msg->tei,
                 $msg->callRef,
+                $msg->callRefType == 0 ? 'source' : 'target',
                 count($msg->parameters)
             ) . "\n";
             foreach ($msg->parameters as $param) {
