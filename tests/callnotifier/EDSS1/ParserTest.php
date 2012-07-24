@@ -78,6 +78,13 @@ class EDSS1_ParserTest extends \PHPUnit_Framework_TestCase
         self::assertEquals(0x050607, $msg->callRef, 'Call reference is wrong');
         self::assertEquals(1, $msg->callRefType, 'Call reference type is wrong');
     }
+
+    public function testParseCallRefDummy()
+    {
+        $msg = $this->parseMsg(
+            '02 FF FF 03 08 00 62 1C 12 91 A1 0F 02 02 41 06 06 06 04 00 82 67 01 0A 02 01 01 70 0B A1 33 34 32 36 31 34 30 38 36 32 FF 0A'
+        );
+    }
 }
 
 ?>
