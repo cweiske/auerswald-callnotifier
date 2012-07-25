@@ -24,7 +24,7 @@ class CLI
         $this->fillConfig($this->config, $result);
 
         $handler = new MessageHandler($this->config);
-        $handler->addLogger(new Logger_Echo(), '*');
+        $handler->addLogger(new Logger_Debug(), '*');
 
         if ($this->config->replayFile !== null) {
             $sourceClass = 'callnotifier\Source_File';

@@ -1,7 +1,7 @@
 <?php
 namespace callnotifier;
 
-class Logger_Echo implements Logger
+class Logger_Debug implements Logger
 {
     public $edss1MsgOnly = false;
 
