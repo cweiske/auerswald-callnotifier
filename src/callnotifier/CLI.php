@@ -24,7 +24,13 @@ class CLI
         $this->fillConfig($this->config, $result);
 
         $handler = new MessageHandler($this->config);
-        $handler->addLogger(new Logger_Debug(), '*');
+        if ($result->options['debug'] || $result->options['debugEdss1']) {
+            $debugLogger = new Logger_Debug();
+            $handler->addLogger($debugLogger, '*');
+            if ($result->options['debugEdss1']) {
+                $debugLogger->edss1MsgOnly = true;
+            }
+        }
 
         if ($this->config->replayFile !== null) {
             $sourceClass = 'callnotifier\Source_File';
@@ -68,6 +74,25 @@ class CLI
                 'description' => "Replay messages from file instead from network",
                 'help_name'   => 'FILE',
                 'action'      => 'StoreString'
+            )
+        );
+
+        $p->addOption(
+            'debug',
+            array(
+                'short_name'  => '-d',
+                'long_name'   => '--debug',
+                'description' => "Debug mode: Echo all received messages and events",
+                'action'      => 'StoreTrue'
+            )
+        );
+        $p->addOption(
+            'debugEdss1',
+            array(
+                'short_name'  => '-e',
+                'long_name'   => '--debug-edss1',
+                'description' => "Debug mode: Show EDSS1 messages only",
+                'action'      => 'StoreTrue'
             )
         );
 
