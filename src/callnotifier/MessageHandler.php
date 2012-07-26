@@ -14,7 +14,6 @@ class MessageHandler
      */
     protected $logger = array(
         'msgData' => array(),
-        'incomingCall' => array(),
         'edss1msg' => array(),
     );
 
@@ -73,15 +72,8 @@ class MessageHandler
             )
         );
 
-        if ($type != 'Info') {
+        if ($type == 'Debug') {
             $this->parseEDSS1($details);
-            return;
-        }
-        //Vegw/Ets-Cref:[0xffef]/[0x64] - VEGW_SETUP from upper layer to internal destination: CGPN[**22]->CDPN[41], 
-        $regex = '#CGPN\\[([^\\]]+)\\]->CDPN\\[([^\\]]+)\\]#';
-        if (preg_match($regex, $details, $matches)) {
-            list(, $from, $to) = $matches;
-            $this->log('incomingCall', array('from' => $from, 'to' => $to));
         }
     }
 
@@ -104,16 +96,6 @@ class MessageHandler
         
         $bytestring = substr($details, 5);
         $bytes = static::getBytesFromHexString($bytestring);
-
-        $msgtype = $bytes{7};
-        static $interestingTyps = array(
-            EDSS1_Message::SETUP,
-            EDSS1_Message::CONNECT,
-            EDSS1_Message::INFORMATION
-        );
-        if (!in_array($msgtype, $interestingTyps)) {
-            //return;
-        }
 
         $mp = new EDSS1_Parser();
         $msg = $mp->parse($bytes);
