@@ -5,47 +5,13 @@ class MessageHandler
 {
     protected $dumpHdl;
 
-    /**
-     * Array of logger object arrays.
-     * Key is the notification type, value is an array of logger objects
-     * that want to get notified about the type.
-     *
-     * @var array
-     */
-    protected $logger = array(
-        'msgData' => array(),
-        'edss1msg' => array(),
-    );
 
-
-    public function __construct($config)
+    public function __construct($config, $log, $callMonitor)
     {
         $this->config = $config;
         $this->prepareDump();
-    }
-
-    /**
-     * Add a logger
-     *
-     * @param Logger       $logger Logger object to register
-     * @param array|string $types  Single notification type or array of such
-     *                             types. "*" means "register for all types".
-     *
-     * @return self
-     */
-    public function addLogger(Logger $logger, $types)
-    {
-        if ($types == '*') {
-            $types = array_keys($this->logger);
-        }
-        $types = (array)$types;
-
-        foreach ($types as $type) {
-            if (!isset($this->logger[$type])) {
-                throw new \Exception('Unknown log type: ' . $type);
-            }
-            $this->logger[$type][] = $logger;
-        }
+        $this->log = $log;
+        $this->callMonitor = $callMonitor;
     }
 
     public function handle($msg)
@@ -63,7 +29,7 @@ class MessageHandler
             return false;
         }
         list(, $type, $someid, $details) = $matches;
-        $this->log(
+        $this->log->log(
             'msgData',
             array(
                 'type' => $type,
@@ -73,7 +39,11 @@ class MessageHandler
         );
 
         if ($type == 'Debug') {
-            $this->parseEDSS1($details);
+            $msg = $this->parseEDSS1($details);
+            if (is_object($msg)) {
+                $this->log->log('edss1msg', array('msg' => $msg));
+                $this->callMonitor->handle($msg);
+            }
         }
     }
 
@@ -82,6 +52,7 @@ class MessageHandler
      *
      * @param string $details Detail string of a debug message
      *
+     * @return EDSS1_Message The retrieved message, NULL if none.
      */
     protected function parseEDSS1($details)
     {
@@ -98,22 +69,7 @@ class MessageHandler
         $bytes = static::getBytesFromHexString($bytestring);
 
         $mp = new EDSS1_Parser();
-        $msg = $mp->parse($bytes);
-
-        $this->log('edss1msg', array('msg' => $msg));
-    }
-
-    protected function log($type, $arData)
-    {
-        if (!isset($this->logger[$type])) {
-            throw new \Exception('Unknown log type: ' . $type);
-        }
-        
-        if (count($this->logger[$type])) {
-            foreach ($this->logger[$type] as $logger) {
-                $logger->log($type, $arData);
-            }
-        }
+        return $mp->parse($bytes);
     }
 
     public static function getBytesFromHexString($bytestring)

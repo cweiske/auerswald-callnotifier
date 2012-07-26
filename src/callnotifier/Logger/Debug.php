@@ -8,11 +8,11 @@ class Logger_Debug implements Logger
     public function __construct()
     {
         $cc = new \Console_Color2();
-        $this->begin = $cc->convert('%y');
-        $this->end = $cc->convert('%n');
-        $this->blue = $cc->convert('%b');
-        $this->red = $cc->convert('%r');
-        $this->white = $cc->convert('%w');
+        $this->begin  = $cc->convert('%y');
+        $this->end    = $cc->convert('%n');
+        $this->blue   = $cc->convert('%b');
+        $this->red    = $cc->convert('%r');
+        $this->white  = $cc->convert('%w');
         $this->purple = $cc->convert('%p');
     }
 

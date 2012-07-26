@@ -23,14 +23,18 @@ class CLI
 
         $this->fillConfig($this->config, $result);
 
-        $handler = new MessageHandler($this->config);
+        $log = new Log();
         if ($result->options['debug'] || $result->options['debugEdss1']) {
             $debugLogger = new Logger_Debug();
-            $handler->addLogger($debugLogger, '*');
+            $log->addLogger($debugLogger, '*');
             if ($result->options['debugEdss1']) {
                 $debugLogger->edss1MsgOnly = true;
             }
         }
+
+        $callMonitor = new CallMonitor($this->config, $log);
+
+        $handler = new MessageHandler($this->config, $log, $callMonitor);
 
         if ($this->config->replayFile !== null) {
             $sourceClass = 'callnotifier\Source_File';
