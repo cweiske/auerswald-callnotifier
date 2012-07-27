@@ -3,16 +3,16 @@ namespace callnotifier;
 
 class EDSS1_Message
 {
-    const ALERTING = "\x01";
-    const CALL_PROCEEDING = "\x02";
-    const SETUP = "\x05";
-    const CONNECT = "\x07";
-    const SETUP_ACKNOWLEDGE = "\x0D";
-    const DISCONNECT = "\x45";
-    const RELEASE = "\x4D";
-    const RELEASE_COMPLETE = "\x5A";
-    const FACILITY = "\x62";
-    const INFORMATION = "\x7B";
+    const ALERTING = 0x01;
+    const CALL_PROCEEDING = 0x02;
+    const SETUP = 0x05;
+    const CONNECT = 0x07;
+    const SETUP_ACKNOWLEDGE = 0x0D;
+    const DISCONNECT = 0x45;
+    const RELEASE = 0x4D;
+    const RELEASE_COMPLETE = 0x5A;
+    const FACILITY = 0x62;
+    const INFORMATION = 0x7B;
 
     /**
      * Message type, see the class constants
@@ -86,7 +86,7 @@ class EDSS1_Message
     {
         $rc = new \ReflectionClass($this);
         foreach ($rc->getConstants() as $name => $value) {
-            if (ord($value) == $this->type) {
+            if ($value == $this->type) {
                 return $name;
             }
         }
