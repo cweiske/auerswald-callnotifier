@@ -6,10 +6,10 @@ namespace callnotifier;
  */
 class EDSS1_Parameter
 {
-    const CALLING_PARTY_NUMBER = "\x6C";
-    const CALLED_PARTY_NUMBER = "\x70";
-    const CONNECTED_NUMBER = "\x4C";
-    const KEYPAD = "\x2C";
+    const CALLING_PARTY_NUMBER = 0x6C;
+    const CALLED_PARTY_NUMBER = 0x70;
+    const CONNECTED_NUMBER = 0x4C;
+    const KEYPAD = 0x2C;
 
     public $type;
     public $length;

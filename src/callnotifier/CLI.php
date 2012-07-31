@@ -31,6 +31,9 @@ class CLI
                 $debugLogger->edss1MsgOnly = true;
             }
         }
+        $log->addLogger(
+            new Logger_CallEcho(), array('incomingCall', 'finishedCall')
+        );
 
         $callMonitor = new CallMonitor($this->config, $log);
 
