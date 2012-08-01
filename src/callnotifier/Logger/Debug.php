@@ -62,7 +62,7 @@ class Logger_Debug implements Logger
     {
         echo sprintf(
             $this->purple . 'EDSS1_Message' . $this->end
-            . ' type %02X '
+            . ' type 0x%02X '
             . $this->purple . '%s' . $this->end
             . ' SAPI %d, CR %d, TEI %d, call %d-%s'
             . ', %d parameters',
@@ -78,7 +78,7 @@ class Logger_Debug implements Logger
 
         foreach ($msg->parameters as $param) {
             echo sprintf(
-                " Parameter type %02X%s, %d bytes: %s\n",
+                " Parameter type 0x%02X%s, %d bytes: %s\n",
                 $param->type,
                 $param->title
                 ? ' ' . $this->purple . $param->title . $this->end
