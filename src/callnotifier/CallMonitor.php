@@ -43,16 +43,7 @@ class CallMonitor
     {
         $call = $this->currentCalls[$callId];
         $call->start = time();
-        foreach ($msg->parameters as $param) {
-            switch ($param->type) {
-            case EDSS1_Parameter::CALLING_PARTY_NUMBER:
-                $call->from = $param->number;
-                break;
-            case EDSS1_Parameter::CALLED_PARTY_NUMBER:
-                $call->to = $param->number;
-                break;
-            }
-        }
+        $this->handleParams($call, $msg);
     }
 
 
@@ -61,6 +52,9 @@ class CallMonitor
         $call = $this->currentCalls[$callId];
 
         switch ($msg->type) {
+        case EDSS1_Message::INFORMATION:
+            $this->handleParams($call, $msg);
+            break;
         case EDSS1_Message::CALL_PROCEEDING:
             $this->log->log('incomingCall', array('call' => $call));
             break;
@@ -71,6 +65,20 @@ class CallMonitor
             $this->log->log('finishedCall', array('call' => $call));
             unset($this->currentCalls[$callId]);
             break;
+        }
+    }
+
+    protected function handleParams($call, $msg)
+    {
+        foreach ($msg->parameters as $param) {
+            switch ($param->type) {
+            case EDSS1_Parameter::CALLING_PARTY_NUMBER:
+                $call->from = $param->number;
+                break;
+            case EDSS1_Parameter::CALLED_PARTY_NUMBER:
+                $call->to = $param->number;
+                break;
+            }
         }
     }
 }
