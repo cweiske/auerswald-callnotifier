@@ -82,7 +82,7 @@ class Logger_Debug implements Logger
                 $param->type,
                 $param->title
                 ? ' ' . $this->purple . $param->title . $this->end
-                : '',
+                : ' ' . $this->purple . $param->getTypeName() . $this->end,
                 $param->length,
                 preg_replace('/[^[:print:]]/', '?', $param->data)
                 . (isset($param->number)
