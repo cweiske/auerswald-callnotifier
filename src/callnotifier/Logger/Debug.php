@@ -63,7 +63,7 @@ class Logger_Debug implements Logger
         echo sprintf(
             $this->purple . 'EDSS1_Message' . $this->end
             . ' type 0x%02X '
-            . $this->purple . '%s' . $this->end
+            . $this->blue . '%s' . $this->end
             . ' SAPI %d, CR %d, TEI %d, call %d-%s'
             . ', %d parameters',
             $msg->type,
