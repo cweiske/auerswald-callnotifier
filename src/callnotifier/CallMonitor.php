@@ -62,6 +62,26 @@ class CallMonitor
             $this->handleParams($call, $msg);
             break;
         case EDSS1_Message::ALERTING:
+            if ($call->type == CallMonitor_Call::OUTGOING) {
+                /**
+                 * There may be two alerts: One from the telephone to the
+                 * switchboard, and one from the switchboard to the target.
+                 *
+                 * The alert from the switchboard to the target call is
+                 * sent first, so we can remove the call from the telephone
+                 * to the switchboard.
+                 */
+                $bFound = false;
+                foreach ($this->currentCalls as $otherCallId => $otherCall) {
+                    if ($otherCallId != $callId && $otherCall->to == $call->to) {
+                        $bFound = true;
+                        break;
+                    }
+                }
+                if ($bFound) {
+                    unset($this->currentCalls[$otherCallId]);
+                }
+            }
             $this->log->log('startingCall', array('call' => $call));
             break;
 
