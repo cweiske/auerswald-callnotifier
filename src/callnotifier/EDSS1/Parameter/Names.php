@@ -6,6 +6,13 @@ namespace callnotifier;
  */
 class EDSS1_Parameter_Names extends EDSS1_Parameter
 {
+    const NUMBER_UNKNOWN = 0;
+    const NUMBER_INTERNATIONAL = 1;
+    const NUMBER_NATIONAL = 2;
+    const NUMBER_NETWORKSPECIFIC = 3;
+    const NUMBER_SUBSCRIBER = 4;
+    const NUMBER_ABBREV = 5;
+
     static $numberTypes = array(
         0 => 'Unknown',
         1 => 'International number',

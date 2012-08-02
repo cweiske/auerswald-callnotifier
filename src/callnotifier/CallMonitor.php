@@ -79,13 +79,26 @@ class CallMonitor
         foreach ($msg->parameters as $param) {
             switch ($param->type) {
             case EDSS1_Parameter::CALLING_PARTY_NUMBER:
-                $call->from = $param->number;
+                $call->from = $this->getFullNumber(
+                    $param->number, $param->numberType
+                );
                 break;
             case EDSS1_Parameter::CALLED_PARTY_NUMBER:
-                $call->to = $param->number;
+                $call->to = $this->getFullNumber(
+                    $param->number, $param->numberType
+                );
                 break;
             }
         }
+    }
+
+
+    protected function getFullNumber($number, $type)
+    {
+        if ($type == EDSS1_Parameter_Names::NUMBER_NATIONAL) {
+            return '0' . $number;
+        }
+        return $number;
     }
 }
 
