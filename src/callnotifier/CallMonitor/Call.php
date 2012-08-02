@@ -3,6 +3,17 @@ namespace callnotifier;
 
 class CallMonitor_Call
 {
+    const INCOMING = 'i';
+    const OUTGOING = 'o';
+
+    /**
+     * Type of call: "i"ncoming or "o"utgoing
+     *
+     * @var string
+     */
+    public $type;
+
+
     /**
      * Telephone number of caller
      *

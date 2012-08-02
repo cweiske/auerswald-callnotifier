@@ -43,6 +43,12 @@ class CallMonitor
     {
         $call = $this->currentCalls[$callId];
         $call->start = time();
+        if ($msg->tei == 127) {
+            $call->type = CallMonitor_Call::INCOMING;
+        } else {
+            $call->type = CallMonitor_Call::OUTGOING;
+        }
+
         $this->handleParams($call, $msg);
     }
 
@@ -56,7 +62,7 @@ class CallMonitor
             $this->handleParams($call, $msg);
             break;
         case EDSS1_Message::CALL_PROCEEDING:
-            $this->log->log('incomingCall', array('call' => $call));
+            $this->log->log('startingCall', array('call' => $call));
             break;
 
         case EDSS1_Message::RELEASE:

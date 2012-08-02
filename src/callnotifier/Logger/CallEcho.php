@@ -6,8 +6,8 @@ class Logger_CallEcho implements Logger
     public function log($type, $arData)
     {
         switch ($type) {
-        case 'incomingCall':
-            $this->displayIncoming($arData['call']);
+        case 'startingCall':
+            $this->displayStart($arData['call']);
             break;
         case 'finishedCall':
             $this->displayFinished($arData['call']);
@@ -16,18 +16,26 @@ class Logger_CallEcho implements Logger
     }
 
 
-    protected function displayIncoming(CallMonitor_Call $call)
+    protected function displayStart(CallMonitor_Call $call)
     {
-        echo 'Incoming call from ' . $call->from
+        echo 'Starting ' . $this->getTypeName($call)
+            . ' call from ' . $call->from
             . ' to ' . $call->to . "\n";
     }
 
     protected function displayFinished(CallMonitor_Call $call)
     {
-        echo 'Finished call from ' . $call->from
+        echo 'Finished ' . $this->getTypeName($call)
+            . ' call from ' . $call->from
             . ' to ' . $call->to
             . ', length ' . date('H:i:s', $call->end - $call->start - 3600)
             . "\n";
+    }
+
+    protected function getTypeName($call)
+    {
+        return $call->type == CallMonitor_Call::INCOMING
+            ? 'incoming' : 'outgoing';
     }
 }
 ?>

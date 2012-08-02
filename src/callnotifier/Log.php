@@ -13,7 +13,7 @@ class Log
     protected $logger = array(
         'msgData' => array(),
         'edss1msg' => array(),
-        'incomingCall' => array(),
+        'startingCall' => array(),
         'finishedCall' => array(),
     );
 

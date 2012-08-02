@@ -32,7 +32,7 @@ class CLI
             }
         }
         $log->addLogger(
-            new Logger_CallEcho(), array('incomingCall', 'finishedCall')
+            new Logger_CallEcho(), array('startingCall', 'finishedCall')
         );
 
         $callMonitor = new CallMonitor($this->config, $log);
