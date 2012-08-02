@@ -61,7 +61,7 @@ class CallMonitor
         case EDSS1_Message::INFORMATION:
             $this->handleParams($call, $msg);
             break;
-        case EDSS1_Message::CALL_PROCEEDING:
+        case EDSS1_Message::ALERTING:
             $this->log->log('startingCall', array('call' => $call));
             break;
 
