@@ -49,7 +49,7 @@ class CallMonitor
             $call->type = CallMonitor_Call::OUTGOING;
         }
 
-        $this->handleParams($call, $msg);
+        $this->handleParams($msg, $call, $callId);
     }
 
 
@@ -59,7 +59,7 @@ class CallMonitor
 
         switch ($msg->type) {
         case EDSS1_Message::INFORMATION:
-            $this->handleParams($call, $msg);
+            $this->handleParams($msg, $call, $callId);
             break;
         case EDSS1_Message::ALERTING:
             if ($call->type == CallMonitor_Call::OUTGOING) {
@@ -94,7 +94,7 @@ class CallMonitor
         }
     }
 
-    protected function handleParams($call, $msg)
+    protected function handleParams($msg, $call, $callId)
     {
         foreach ($msg->parameters as $param) {
             switch ($param->type) {
@@ -107,7 +107,18 @@ class CallMonitor
                 $call->to = $this->getFullNumber(
                     $param->number, $param->numberType
                 );
+                if ($call->type == CallMonitor_Call::INCOMING
+                    && $param->numberType != EDSS1_Parameter_Names::NUMBER_SUBSCRIBER
+                ) {
+                    //only keep incoming calls that arrive at the switchboard,
+                    // not the ones from the switchboard to the telephones
+                    unset($this->currentCalls[$callId]);
+                }
                 break;
+            case EDSS1_Parameter::KEYPAD:
+                if ($call->to === null) {
+                    $call->to = $param->data;
+                }
             }
         }
     }
