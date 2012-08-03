@@ -47,9 +47,23 @@ class CallMonitorTest extends \PHPUnit_Framework_TestCase implements Logger
         $this->assertTo('**41', $this->calls['finishedCall'][0]);
     }
 
-    public function testIntCallToExternal()
+    public function testAnalogIntCallToExternal()
     {
         $this->loadDump('intern-analog-zu-handy.bin');
+        $this->assertCallCount(1, 1);
+
+        $this->assertOutgoing($this->calls['startingCall'][0]);
+        $this->assertFrom('40862', $this->calls['startingCall'][0]);
+        $this->assertTo('01634779878', $this->calls['startingCall'][0]);
+
+        $this->assertOutgoing($this->calls['finishedCall'][0]);
+        $this->assertFrom('40862', $this->calls['finishedCall'][0]);
+        $this->assertTo('01634779878', $this->calls['finishedCall'][0]);
+    }
+
+    public function testIsdnIntCallToExternal()
+    {
+        $this->loadDump('intern-22-zu-handy.bin');
         $this->assertCallCount(1, 1);
 
         $this->assertOutgoing($this->calls['startingCall'][0]);
