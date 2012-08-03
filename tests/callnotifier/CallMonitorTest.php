@@ -38,9 +38,11 @@ class CallMonitorTest extends \PHPUnit_Framework_TestCase implements Logger
         $this->loadDump('intern-22-zu-41.bin');
         $this->assertCallCount(1, 1);
 
+        $this->assertOutgoing($this->calls['startingCall'][0]);
         $this->assertFrom('22', $this->calls['startingCall'][0]);
         $this->assertTo('**41', $this->calls['startingCall'][0]);
 
+        $this->assertOutgoing($this->calls['finishedCall'][0]);
         $this->assertFrom('22', $this->calls['finishedCall'][0]);
         $this->assertTo('**41', $this->calls['finishedCall'][0]);
     }
@@ -50,9 +52,11 @@ class CallMonitorTest extends \PHPUnit_Framework_TestCase implements Logger
         $this->loadDump('intern-analog-zu-handy.bin');
         $this->assertCallCount(1, 1);
 
+        $this->assertOutgoing($this->calls['startingCall'][0]);
         $this->assertFrom('40862', $this->calls['startingCall'][0]);
         $this->assertTo('01634779878', $this->calls['startingCall'][0]);
 
+        $this->assertOutgoing($this->calls['finishedCall'][0]);
         $this->assertFrom('40862', $this->calls['finishedCall'][0]);
         $this->assertTo('01634779878', $this->calls['finishedCall'][0]);
     }
@@ -62,9 +66,11 @@ class CallMonitorTest extends \PHPUnit_Framework_TestCase implements Logger
         $this->loadDump('handy-zu-gruppe.bin');
         $this->assertCallCount(1, 1);
 
+        $this->assertIncoming($this->calls['startingCall'][0]);
         $this->assertFrom('01634779878', $this->calls['startingCall'][0]);
         $this->assertTo('40862', $this->calls['startingCall'][0]);
 
+        $this->assertIncoming($this->calls['finishedCall'][0]);
         $this->assertFrom('01634779878', $this->calls['finishedCall'][0]);
         $this->assertTo('40862', $this->calls['finishedCall'][0]);
     }
@@ -94,6 +100,22 @@ class CallMonitorTest extends \PHPUnit_Framework_TestCase implements Logger
         $this->assertSame(
             $number, $call->to,
             'Call "to" number does not match'
+        );
+    }
+
+    protected function assertIncoming(CallMonitor_Call $call)
+    {
+        $this->assertSame(
+            CallMonitor_Call::INCOMING, $call->type,
+            'Call should be "incoming"'
+        );
+    }
+
+    protected function assertOutgoing(CallMonitor_Call $call)
+    {
+        $this->assertSame(
+            CallMonitor_Call::OUTGOING, $call->type,
+            'Call should be "outgoing"'
         );
     }
 
