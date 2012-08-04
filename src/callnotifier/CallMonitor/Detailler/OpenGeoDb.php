@@ -4,6 +4,26 @@ namespace callnotifier;
 class CallMonitor_Detailler_OpenGeoDb implements CallMonitor_Detailler
 {
     protected $db;
+    protected static $mobile = array(
+        '0151' => 'Telekom',
+        '0152' => 'Vodafone D2',
+        '0157' => 'E-Plus',
+        '0159' => 'O2',
+        '0160' => 'Telekom',
+        '0162' => 'Vodafone D2',
+        '0163' => 'E-Plus',
+        '0164' => 'Cityruf (e*message)',
+        '0170' => 'Telekom',
+        '0171' => 'Telekom',
+        '0172' => 'Vodafone D2',
+        '0173' => 'Vodafone D2',
+        '0174' => 'Vodafone D2',
+        '0175' => 'Telekom',
+        '0176' => 'O2',
+        '0177' => 'E-Plus',
+        '0178' => 'E-Plus',
+        '0179' => 'O2',
+    );
 
     public function __construct()
     {
@@ -29,6 +49,14 @@ class CallMonitor_Detailler_OpenGeoDb implements CallMonitor_Detailler
 
     protected function loadLocation($number)
     {
+        if (substr($number, 0, 2) == '01') {
+            //special number
+            $prefix = substr($number, 0, 4);
+            if (isset(self::$mobile[$prefix])) {
+                return 'Handy: ' . self::$mobile[$prefix];
+            }
+            return null;
+        }
         //area codes in germany can be 3 to 6 numbers
         //FIXME: what about international numbers?
         for ($n = 3; $n <= 6; $n++) {
