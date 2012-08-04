@@ -13,10 +13,22 @@ class CallMonitor
 {
     protected $currentCalls = array();
 
+    /**
+     * Array of objects that are able to load details for a call
+     *
+     * @var array
+     */
+    protected $detaillers = array();
+
     public function __construct($config, $log)
     {
         $this->config = $config;
         $this->log = $log;
+    }
+
+    public function addDetailler(CallMonitor_Detailler $detailler)
+    {
+        $this->detaillers[] = $detailler;
     }
 
     public function handle(EDSS1_Message $msg)
@@ -82,6 +94,7 @@ class CallMonitor
                     unset($this->currentCalls[$otherCallId]);
                 }
             }
+            $this->loadCallDetails($call);
             $this->log->log('startingCall', array('call' => $call));
             break;
 
@@ -130,6 +143,19 @@ class CallMonitor
             return '0' . $number;
         }
         return $number;
+    }
+
+    /**
+     * Load details for a call, e.g. the name of the calling person
+     * or the area
+     *
+     * @return void
+     */
+    protected function loadCallDetails($call)
+    {
+        foreach ($this->detaillers as $detailler) {
+            $detailler->loadCallDetails($call);
+        }
     }
 }
 

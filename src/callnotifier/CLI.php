@@ -36,6 +36,8 @@ class CLI
         );
 
         $callMonitor = new CallMonitor($this->config, $log);
+        $callMonitor->addDetailler(new CallMonitor_Detailler_LDAP());
+        $callMonitor->addDetailler(new CallMonitor_Detailler_OpenGeoDb());
 
         $handler = new MessageHandler($this->config, $log, $callMonitor);
 
