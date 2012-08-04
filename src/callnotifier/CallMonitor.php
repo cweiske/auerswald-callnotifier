@@ -6,7 +6,7 @@ namespace callnotifier;
  * and notifies loggers of incoming and finished calls.
  *
  * Notifications:
- * - incomingCall
+ * - startingCall
  * - finishedCall
  */
 class CallMonitor
