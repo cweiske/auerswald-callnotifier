@@ -36,8 +36,23 @@ class CLI
         );
 
         $callMonitor = new CallMonitor($this->config, $log);
-        $callMonitor->addDetailler(new CallMonitor_Detailler_LDAP());
-        $callMonitor->addDetailler(new CallMonitor_Detailler_OpenGeoDb());
+        $callMonitor->addDetailler(
+            new CallMonitor_Detailler_LDAP(
+                array(
+                    'host' => 'ldap.home.cweiske.de',
+                    'basedn' => 'ou=adressbuch,dc=cweiske,dc=de',
+                    'binddn' => 'cn=readonly,ou=users,dc=cweiske,dc=de',
+                    'bindpw' => 'readonly'
+                )
+            )
+        );
+        $callMonitor->addDetailler(
+            new CallMonitor_Detailler_OpenGeoDb(
+                'mysql:host=dojo;dbname=opengeodb',
+                'opengeodb-read',
+                'opengeodb'
+            )
+        );
 
         $handler = new MessageHandler($this->config, $log, $callMonitor);
 

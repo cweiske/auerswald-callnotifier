@@ -1,6 +1,17 @@
 <?php
 namespace callnotifier;
 
+/**
+ * Fetch location name from OpenGeoDb.
+ * In case of mobile phone numbers, the provider is named.
+ *
+ * It uses a custom table "my_orte" that can be created with
+ * docs/opengeodb-create-my_orte.sql
+ *
+ * Sets "toLocation" or "fromLocation", depending on call type
+ *
+ * @link http://opengeodb.org/
+ */
 class CallMonitor_Detailler_OpenGeoDb implements CallMonitor_Detailler
 {
     protected $db;
@@ -25,12 +36,18 @@ class CallMonitor_Detailler_OpenGeoDb implements CallMonitor_Detailler
         '0179' => 'O2',
     );
 
-    public function __construct()
+    /**
+     * Create new detailler object
+     *
+     * @param string $dsn      PDO connection string, for example
+     *                         'mysql:host=dojo;dbname=opengeodb'
+     * @param string $username Database username
+     * @param string $password Database password
+     */
+    public function __construct($dsn, $username, $password)
     {
         $this->db = new \PDO(
-            'mysql:host=dojo;dbname=opengeodb',
-            'opengeodb-read',
-            'opengeodb',
+            $dsn, $username, $password,
             array(
                 \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
                 \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC
@@ -57,44 +74,23 @@ class CallMonitor_Detailler_OpenGeoDb implements CallMonitor_Detailler
             }
             return null;
         }
-        //area codes in germany can be 3 to 6 numbers
+
         //FIXME: what about international numbers?
-        for ($n = 3; $n <= 6; $n++) {
-            $areacode = substr($number, 0, $n);
-            $name = $this->getNameForAreaCode($areacode);
-            if ($name !== null) {
-                return $name;
-            }
-        }
-
-        return null;
-    }
-
-    protected function getNameForAreaCode($areacode)
-    {
+        //area codes in germany can be 3 to 6 numbers
         $stm = $this->db->query(
-            'SELECT loc_id FROM geodb_textdata'
-            . ' WHERE text_type = "500400000"'//area code
-            . ' AND text_val = ' . $this->db->quote($areacode)
-        );
-        $res = $stm->fetch();
-        if ($res === false) {
-            //area code does not exist
-            return null;
-        }
-
-        $locId = $res['loc_id'];
-        $stm = $this->db->query(
-            'SELECT text_val FROM geodb_textdata'
-            . ' WHERE text_type = "500100000"'//name
-            . ' AND loc_id = ' . $this->db->quote($locId)
+            'SELECT name FROM my_orte'
+            . ' WHERE vorwahl = ' . $this->db->quote(substr($number, 0, 3))
+            . ' OR vorwahl = ' . $this->db->quote(substr($number, 0, 4))
+            . ' OR vorwahl = ' . $this->db->quote(substr($number, 0, 5))
+            . ' OR vorwahl = ' . $this->db->quote(substr($number, 0, 6))
+            . ' ORDER BY einwohner DESC'
         );
         $res = $stm->fetch();
         if ($res === false) {
             return null;
         }
 
-        return $res['text_val'];
+        return $res['name'];
     }
 
 }
