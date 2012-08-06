@@ -1,8 +1,35 @@
 <?php
 namespace callnotifier;
 
+/**
+ * Fetch caller names from a LDAP address book.
+ *
+ * The following attributes are searched:
+ * - companyPhone
+ * - homePhone
+ * - mobile
+ * - otherPhone
+ * - telephoneNumber
+ *
+ * For the first result, the displayName is used if defined.
+ * If it does not exist, the givenName + sn are used.
+ *
+ * Set "toName" or "fromName", depending on call type.
+ *
+ * Uses the Net_LDAP2 PEAR package
+ */
 class CallMonitor_Detailler_LDAP implements CallMonitor_Detailler
 {
+    /**
+     * Create new ldap name resolver
+     *
+     * @param array $ldapConfig Array of Net_LDAP2 configuration parameters.
+     *                          Some of those you might want to use:
+     *                          - host   - LDAP server host name
+     *                          - basedn - root DN that gets searched
+     *                          - binddn - Username to authenticate with
+     *                          - bindpw - Password for username
+     */
     public function __construct($ldapConfig)
     {
         $this->ldap = \Net_LDAP2::connect($ldapConfig);
