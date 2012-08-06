@@ -88,7 +88,7 @@ class MessageHandler
         }
         $this->dumpHdl = fopen($this->config->dumpFile, 'w');
         if (!$this->dumpHdl) {
-            throw new Exception('Cannot open dump file for writing');
+            throw new \Exception('Cannot open dump file for writing');
         }
     }
 

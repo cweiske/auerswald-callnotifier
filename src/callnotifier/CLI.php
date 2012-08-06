@@ -36,6 +36,7 @@ class CLI
         );
 
         $callMonitor = new CallMonitor($this->config, $log);
+        /*
         $callMonitor->addDetailler(
             new CallMonitor_Detailler_LDAP(
                 array(
@@ -52,6 +53,16 @@ class CLI
                 'opengeodb-read',
                 'opengeodb'
             )
+        );
+        */
+
+        $log->addLogger(
+            new Logger_CallFile('incoming.log', 'i', '40862'),
+            array('finishedCall')
+        );
+        $log->addLogger(
+            new Logger_CallFile('all.log'),
+            array('finishedCall')
         );
 
         $handler = new MessageHandler($this->config, $log, $callMonitor);
