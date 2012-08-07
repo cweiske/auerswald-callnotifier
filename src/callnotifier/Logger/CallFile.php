@@ -1,7 +1,7 @@
 <?php
 namespace callnotifier;
 
-class Logger_CallFile implements Logger
+class Logger_CallFile extends Logger_CallBase
 {
     protected $file;
     protected $fileHdl;
@@ -99,18 +99,6 @@ class Logger_CallFile implements Logger
             $number = '*anonym*';
         }
         return str_pad($number, 12, ' ', STR_PAD_RIGHT);
-    }
-
-    protected function addUnsetVars($call)
-    {
-        static $expectedVars = array(
-            'toName', 'fromName', 'toLocation', 'fromLocation'
-        );
-        foreach ($expectedVars as $varName) {
-            if (!isset($call->$varName)) {
-                $call->$varName = null;
-            }
-        }
     }
 
 }

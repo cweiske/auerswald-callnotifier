@@ -64,6 +64,14 @@ class CLI
             new Logger_CallFile('all.log'),
             array('finishedCall')
         );
+        $log->addLogger(
+            new Logger_CallDb(
+                'mysql:host=localhost;dbname=callnotifier',
+                'callnotifier',
+                'callnotifier'
+            ),
+            array('finishedCall')
+        );
 
         $handler = new MessageHandler($this->config, $log, $callMonitor);
 
