@@ -5,4 +5,4 @@ mysqldump -ucallnotifier -pcallnotifier callnotifier\
  -d --skip-add-drop-table --skip-comments\
  | grep -v '/*!'\
  | grep -v '^$'\
- > ../docs/call-log.sql
+ > ../docs/create-call-log.sql

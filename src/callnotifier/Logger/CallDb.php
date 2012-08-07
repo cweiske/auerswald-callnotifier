@@ -1,6 +1,12 @@
 <?php
 namespace callnotifier;
 
+/**
+ * Logs finished calls into a SQL database.
+ *
+ * To use this, setup the database table using the script
+ * in docs/create-call-log.sql
+ */
 class Logger_CallDb extends Logger_CallBase
 {
     /**
