@@ -21,20 +21,24 @@ class Source_Remote
 
     public function connect($ip, $port)
     {
+        if ($ip == '') {
+            throw new \Exception('No remote IP or hostname given.');
+        }
+
         $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
         if ($socket === false) {
-            echo "socket_create() failed: reason: "
-                . socket_strerror(socket_last_error()) . "\n";
-        } else {
-            echo "OK.\n";
+            throw new \Exception(
+                'socket_create() failed: reason: '
+                . socket_strerror(socket_last_error())
+            );
         }
-        echo "Attempting to connect to '$ip' on port '$port'...";
+        //echo "Attempting to connect to '$ip' on port '$port'...";
         $result = socket_connect($socket, $ip, $port);
         if ($result === false) {
-            echo "socket_connect() failed.\nReason: ($result) "
-                . socket_strerror(socket_last_error($socket)) . "\n";
-        } else {
-            echo "OK.\n";
+            throw new \Exception(
+                "socket_connect() failed. Reason: "
+                . socket_strerror(socket_last_error($socket))
+            );
         }
 
         $this->socket = $socket;

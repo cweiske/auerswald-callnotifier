@@ -5,7 +5,6 @@ namespace callnotifier;
 class CLI
 {
     protected $cliParser;
-    protected $config;
 
     public function __construct()
     {
@@ -14,14 +13,14 @@ class CLI
 
     public function run()
     {
-        $this->config = new Config();
+        $config = new Config();
         try {
             $result = $this->cliParser->parse();
         } catch (\Exception $exc) {
             $this->cliParser->displayError($exc->getMessage());
         }
 
-        $this->fillConfig($this->config, $result);
+        $this->fillConfig($config, $result);
 
         $log = new Log();
         if ($result->options['debug'] || $result->options['debugEdss1']) {
@@ -31,57 +30,32 @@ class CLI
                 $debugLogger->edss1MsgOnly = true;
             }
         }
-        $log->addLogger(
-            new Logger_CallEcho(), array('startingCall', 'finishedCall')
-        );
 
-        $callMonitor = new CallMonitor($this->config, $log);
-        /*
-        $callMonitor->addDetailler(
-            new CallMonitor_Detailler_LDAP(
-                array(
-                    'host' => 'ldap.home.cweiske.de',
-                    'basedn' => 'ou=adressbuch,dc=cweiske,dc=de',
-                    'binddn' => 'cn=readonly,ou=users,dc=cweiske,dc=de',
-                    'bindpw' => 'readonly'
-                )
-            )
-        );
-        $callMonitor->addDetailler(
-            new CallMonitor_Detailler_OpenGeoDb(
-                'mysql:host=dojo;dbname=opengeodb',
-                'opengeodb-read',
-                'opengeodb'
-            )
-        );
-        */
+        $callMonitor = new CallMonitor($config, $log);
 
-        $log->addLogger(
-            new Logger_CallFile('incoming.log', 'i', '40862'),
-            array('finishedCall')
-        );
-        $log->addLogger(
-            new Logger_CallFile('all.log'),
-            array('finishedCall')
-        );
-        $log->addLogger(
-            new Logger_CallDb(
-                'mysql:host=localhost;dbname=callnotifier',
-                'callnotifier',
-                'callnotifier'
-            ),
-            array('finishedCall')
-        );
+        $configFile = $this->getConfigFile();
+        if ($configFile !== null) {
+            include $configFile;
+        }
 
-        $handler = new MessageHandler($this->config, $log, $callMonitor);
+        $handler = new MessageHandler($config, $log, $callMonitor);
 
-        if ($this->config->replayFile !== null) {
+        if ($config->replayFile !== null) {
             $sourceClass = 'callnotifier\Source_File';
         } else {
             $sourceClass = 'callnotifier\Source_Remote';
         }
-        $source = new $sourceClass($this->config, $handler);
-        $source->run();
+
+        try {
+            $source = new $sourceClass($config, $handler);
+            $source->run();
+        } catch (\Exception $e) {
+            $msg = 'Callnotifier error!' . "\n"
+                . 'Code: ' . $e->getCode() . "\n"
+                . 'Message: ' . $e->getMessage() . "\n";
+            file_put_contents('php://stderr', $msg);
+            exit(1);
+        }
     }
 
     public function setupCli()
@@ -147,6 +121,39 @@ class CLI
         $config->setIfNotEmpty('host', $result->options['host']);
         $config->setIfNotEmpty('dumpFile', $result->options['dumpFile']);
         $config->setIfNotEmpty('replayFile', $result->options['replayFile']);
+    }
+
+    /**
+     * Finds the path to the configuration file.
+     *
+     * The following locations are tried:
+     * - Git checkout: data/callnotifier.config.php
+     * - ~/.config/callnotifier.config.php
+     * - /etc/callnotifier.config.php
+     *
+     * @return string Full path of config file or NULL if no file found
+     */
+    protected function getConfigFile()
+    {
+        if (basename(dirname(__DIR__)) == 'src'
+            && file_exists(__DIR__ . '/../../data/callnotifier.config.php')
+        ) {
+            return __DIR__ . '/../../data/callnotifier.config.php';
+        }
+
+        if (isset($_ENV['HOME'])) {
+            $file = $_ENV['HOME'] . '/.config/callnotifier.config.php';
+            if (file_exists($file)) {
+                return $file;
+            }
+        }
+
+        $file = '/etc/callnotifier.config.php';
+        if (file_exists($file)) {
+            return $file;
+        }
+
+        return null;
     }
 }
 
