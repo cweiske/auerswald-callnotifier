@@ -1,0 +1,58 @@
+<?php
+/**
+ * Callnotifier configuration file
+ * Copy that file to callnotifier.config.php and adjust it to your needs
+ */
+namespace callnotifier;
+
+//IP of Auerswald COMpact 3000
+$config->host = '192.168.1.2';
+
+//Load caller names from LDAP
+$callMonitor->addDetailler(
+    new CallMonitor_Detailler_LDAP(
+        array(
+            'host' => '192.168.1.10',
+            'basedn' => 'ou=adressbuch,dc=example,dc=org',
+            'binddn' => 'cn=readonly,ou=users,dc=example,dc=org',
+            'bindpw' => 'readonly'
+        )
+    )
+);
+
+//Load caller locations (city) from OpenGeoDb
+$callMonitor->addDetailler(
+    new CallMonitor_Detailler_OpenGeoDb(
+        'mysql:host=192.168.1.10;dbname=opengeodb',
+        'opengeodb-read',
+        'opengeodb'
+    )
+);
+
+
+//Show starting and finished calls on the shell
+$log->addLogger(
+    new Logger_CallEcho(), array('startingCall', 'finishedCall')
+);
+
+//Log incoming finished calls to MSN 12345 to file "incoming.log"
+$log->addLogger(
+    new Logger_CallFile('incoming.log', 'i', '12345'),
+    array('finishedCall')
+);
+//Log all finished calls to file "all.log"
+$log->addLogger(
+    new Logger_CallFile('all.log'),
+    array('finishedCall')
+);
+//Log finished calls into a SQL database
+$log->addLogger(
+    new Logger_CallDb(
+        'mysql:host=192.168.1.10;dbname=callnotifier',
+        'username',
+        'password'
+    ),
+    array('finishedCall')
+);
+
+?>
