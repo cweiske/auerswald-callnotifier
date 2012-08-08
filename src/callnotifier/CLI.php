@@ -79,7 +79,7 @@ class CLI
             'dumpFile',
             array(
                 'long_name'   => '--dump',
-                'description' => 'dump messages into file for later replay',
+                'description' => 'Dump messages into file for later replay',
                 'help_name'   => 'FILE',
                 'action'      => 'StoreString'
             )
