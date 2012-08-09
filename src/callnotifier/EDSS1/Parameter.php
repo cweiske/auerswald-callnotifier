@@ -9,6 +9,7 @@ class EDSS1_Parameter
     const BEARER_CAPABILITY = 0x04;
     const CAUSE = 0x08;
     const CALL_IDENTITY = 0x10;
+    const FACILITY_INFORMATION = 0x1C;
     const CALL_STATE = 0x14;
     const CHANNEL_IDENTIFICATION = 0x18;
     const PROGRESS_INDICATOR = 0x1E;
