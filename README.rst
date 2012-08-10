@@ -14,6 +14,24 @@ caller location city names via OpenGeoDb.
 
 .. contents::
 
+
+============
+Installation
+============
+
+1. Clone the git repository
+2. Install dependencies
+3. Configure the tool
+4. Run ``./callnotifier.php``
+
+
+Dependencies
+============
+- PEAR's Console_CommandLine package
+- PEAR's Net_LDAP2 package for LDAP name resolution
+- curl for the dreambox notifier
+
+
 =============
 Configuration
 =============
@@ -116,6 +134,12 @@ Known issues
 Ctrl+C does not send the disconnect command.
 This is a problem with PHP since pcntl_signal handling and blocking sockets
 do not work together. The signal will not be handled.
+
+
+=======
+License
+=======
+Auerswald callnotifier is licensed under the terms of the GPLv3 or later.
 
 
 ======
