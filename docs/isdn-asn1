@@ -1,0 +1,46 @@
+02 FF FF 03 08 00 62 1C 2A 91 A1 27 02 02 80 ED 02 01 0C 30 1E 0A 01 01 0A 01 20 A0 16 A0 14 A1 0F 0A 01 02 12 0A 31 36 33 34 37 37 39 38 37 38 0A 01 03 70 06 C1 34 30 38 36 32 FF 0A
+                  |  |  |  |  |  |  |  |  |---- +
+                  |  |  |  |  |  |  |  |  + Wert des 
+                  |  |  |  |  |  |  |  + Länge Integer
+                  |  |  |  |  |  |  + Invoke identifier tag: Integer
+                  |  |  |  |  |  +  Länge component tag (39)
+                  |  |  |  |  + component tag (A1=anruf, A2=zurückgegebener wert)
+                  |  |  |  + remote operation protocol
+                  |  |  + 42 bytes
+                  |  + Facility information
+                  + facility
+
+
+Rufumleitung:
+00 97 18 B2 08 00 62 1C 2C 91 A1 29 02 01 63 02 01 07 30 21 0A 01 00 0A 01 01 30 0D 80 0B 31 35 31 31 30 37 32 33 38 34 30 A1 0A 0A 01 04 12 05 34 30 38 36 32 FF 0A
+                  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |-------------------------------
+                  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  + 15110723840
+                  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  + Länge: 11
+                  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  + Wert: Numberdigits
+                  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  + Länge: 13
+                  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  + Tag: Sequence, address (zieladresse)
+                  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+                  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  + Wert: Speech
+                  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  + Länge
+                  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  + Tag type: Basicservice
+                  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+                  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  + cfu, Rufumleitung unbedingt
+                  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  + Länge
+                  |  |  |  |  |  |  |  |  |  |  |  |  |  |  + Tag? type: Procedure
+                  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+                  |  |  |  |  |  |  |  |  |  |  |  |  |  + Sequence length: 33
+                  |  |  |  |  |  |  |  |  |  |  |  |  + Tag: Sequence
+                  |  |  |  |  |  |  |  |  |  |  |  |
+                  |  |  |  |  |  |  |  |  |  |  |  + typ: activateDiversion
+                  |  |  |  |  |  |  |  |  |  |  + Länge Opval
+                  |  |  |  |  |  |  |  |  |  + Operation value tag
+                  |  |  |  |  |  |  |  |  + Wert Integer: 99
+                  |  |  |  |  |  |  |  + Länge Integer
+                  |  |  |  |  |  |  + Invoke identifier tag: Integer
+                  |  |  |  |  |  +  Länge component tag (39)
+                  |  |  |  |  + component tag (A1=anruf, A2=zurückgegebener wert)
+                  |  |  |  + remote operation protocol
+                  |  |  + 42 bytes
+                  |  + Facility information
+                  + facility
+
