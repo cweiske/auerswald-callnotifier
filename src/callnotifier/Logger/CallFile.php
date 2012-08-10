@@ -74,31 +74,15 @@ class Logger_CallFile extends Logger_CallBase
         $str = date('Y-m-d H:i:s', $call->start);
         if ($call->type == CallMonitor_Call::INCOMING) {
             $str .= ' ' . $call->to
-                . ' von  ' . $call->fromName;
-            if ($call->fromLocation) {
-                $str .= ' aus ' . $call->fromLocation;
-            }
-            $str .= ' ' . $this->getNumber($call->from);
+                . ' von  ' . $this->getNumberString($call, 'from');
         } else {
             $str .= ' ' . $call->from
-                . ' nach ' . $call->toName;
-            if ($call->toLocation) {
-                $str .= ' aus ' . $call->toLocation;
-            }
-            $str .= ' ' . $this->getNumber($call->to);
+                . ' nach ' . $this->getNumberString($call, 'to');
         }
 
         $str .= ', Dauer ' . date('H:i:s', $call->end - $call->start - 3600);
 
         return $str . "\n";
-    }
-
-    protected function getNumber($number)
-    {
-        if ($number == '') {
-            $number = '*anonym*';
-        }
-        return str_pad($number, 12, ' ', STR_PAD_RIGHT);
     }
 
 }
