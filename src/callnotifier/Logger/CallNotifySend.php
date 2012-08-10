@@ -59,6 +59,7 @@ class Logger_CallNotifySend extends Logger_CallBase
             . ' -c callmonitor'
             . ' ' . escapeshellarg($title)
             . ' ' . escapeshellarg($msg)
+            . ' > /dev/null 2>&1 &'
         );
     }
 }
