@@ -141,6 +141,8 @@ class CallMonitor
     {
         if ($type == EDSS1_Parameter_Names::NUMBER_NATIONAL) {
             return '0' . $number;
+        } else if ($type == EDSS1_Parameter_Names::NUMBER_INTERNATIONAL) {
+            return '+' . $number;
         }
         return $number;
     }
