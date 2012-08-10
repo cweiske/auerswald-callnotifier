@@ -54,7 +54,7 @@ class Logger_CallNotifySend extends Logger_CallBase
         exec(
             'notify-send'
             . ' -u low'
-            . ' --expire-time=1000'
+            . ' --expire-time=5000'
             . ' -i phone'
             . ' -c callmonitor'
             . ' ' . escapeshellarg($title)
