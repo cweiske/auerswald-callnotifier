@@ -17,8 +17,11 @@ class Logger_CallDb extends Logger_CallBase
      * @param string $username Database username
      * @param string $password Database password
      */
-    public function __construct($dsn, $username, $password)
-    {
+    public function __construct(
+        $dsn, $username, $password,
+        $callTypes = 'i', $msns = array()
+    ) {
+        parent::__construct($callTypes, $msns);
         $this->db = new \PDO(
             $dsn, $username, $password,
             array(
@@ -60,6 +63,13 @@ class Logger_CallDb extends Logger_CallBase
         }
 
         $call = $arData['call'];
+        if (!$this->hasValidType($call)) {
+            return;
+        }
+        if (!$this->hasValidMsn($call)) {
+            return;
+        }
+
         $this->addUnsetVars($call);
 
         $ret = $this->stmt->execute(

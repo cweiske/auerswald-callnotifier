@@ -5,18 +5,26 @@ class Logger_CallDreambox extends Logger_CallBase
 {
     protected $host;
 
-    public function __construct($host)
+    public function __construct($host, $callTypes = 'i', $msns = array())
     {
+        parent::__construct($callTypes, $msns);
         $this->host = $host;
     }
 
     public function log($type, $arData)
     {
-        switch ($type) {
-        case 'startingCall':
-            $this->displayStart($arData['call']);
-            break;
+        if ($type != 'startingCall') {
+            return;
         }
+
+        $call = $arData['call'];
+        if (!$this->hasValidType($call)) {
+            return;
+        }
+        if (!$this->hasValidMsn($call)) {
+            return;
+        }
+        $this->displayStart($call);
     }
 
 

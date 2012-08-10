@@ -5,8 +5,6 @@ class Logger_CallFile extends Logger_CallBase
 {
     protected $file;
     protected $fileHdl;
-    protected $callTypes;
-    protected $msns;
 
     /**
      * Create a new file call logger. It logs finished calls into a file.
@@ -45,22 +43,10 @@ class Logger_CallFile extends Logger_CallBase
         }
 
         $call = $arData['call'];
-
-        //check if call type matches
-        if ($call->type == CallMonitor_Call::INCOMING && $this->callTypes == 'o') {
+        if (!$this->hasValidType($call)) {
             return;
         }
-        if ($call->type == CallMonitor_Call::OUTGOING && $this->callTypes == 'i') {
-            return;
-        }
-
-        if ($call->type == CallMonitor_Call::INCOMING) {
-            $msn = $call->to;
-        } else {
-            $msn = $call->from;
-        }
-        if (count($this->msns) > 0 && !in_array($msn, $this->msns)) {
-            //msn shall not be logged
+        if (!$this->hasValidMsn($call)) {
             return;
         }
 

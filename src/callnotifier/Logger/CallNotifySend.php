@@ -7,12 +7,23 @@ class Logger_CallNotifySend extends Logger_CallBase
     {
         switch ($type) {
         case 'startingCall':
-            $this->displayStart($arData['call']);
+            $displayMethod = 'displayStart';
             break;
         case 'finishedCall':
-            $this->displayFinished($arData['call']);
+            $displayMethod = 'displayFinished';
             break;
+        default:
+            return;
         }
+
+        $call = $arData['call'];
+        if (!$this->hasValidType($call)) {
+            return;
+        }
+        if (!$this->hasValidMsn($call)) {
+            return;
+        }
+        $this->$displayMethod($arData['call']);
     }
 
 
