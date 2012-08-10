@@ -55,4 +55,16 @@ $log->addLogger(
     array('finishedCall')
 );
 
+//Log starting calls to the dreambox satellite receiver
+$log->addLogger(
+    new Logger_CallDreambox('192.168.1.12', 'i', array('12345', '12346')),
+    array('startingCall')
+);
+
+//Show desktop notifications for calls (via notify-send)
+$log->addLogger(
+    new Logger_CallNotifySend('i', array('40862', '40835')),
+    array('startingCall', 'finishedCall')
+);
+
 ?>
