@@ -58,9 +58,13 @@ class CallMonitor_Detailler_OpenGeoDb implements CallMonitor_Detailler
     public function loadCallDetails(CallMonitor_Call $call)
     {
         if ($call->type == CallMonitor_Call::INCOMING) {
-            $call->fromLocation = $this->loadLocation($call->from);
+            if (!isset($call->fromLocation) || $call->fromLocation === null) {
+                $call->fromLocation = $this->loadLocation($call->from);
+            }
         } else {
-            $call->toLocation = $this->loadLocation($call->to);
+            if (!isset($call->toLocation) || $call->toLocation === null) {
+                $call->toLocation = $this->loadLocation($call->to);
+            }
         }
     }
 

@@ -101,6 +101,9 @@ class CallMonitor
         case EDSS1_Message::RELEASE:
         case EDSS1_Message::RELEASE_COMPLETE:
             $call->end = time();
+            //we need to load details here because they might not have been
+            //loaded yet, e.g. for calls to MSNs that have no phones.
+            $this->loadCallDetails($call);
             $this->log->log('finishedCall', array('call' => $call));
             unset($this->currentCalls[$callId]);
             break;

@@ -43,9 +43,13 @@ class CallMonitor_Detailler_LDAP implements CallMonitor_Detailler
     public function loadCallDetails(CallMonitor_Call $call)
     {
         if ($call->type == CallMonitor_Call::INCOMING) {
-            $call->fromName = $this->loadName($call->from);
+            if (!isset($call->fromName) || $call->fromName === null) {
+                $call->fromName = $this->loadName($call->from);
+            }
         } else {
-            $call->toName = $this->loadName($call->to);
+            if (!isset($call->toName) || $call->toName === null) {
+                $call->toName = $this->loadName($call->to);
+            }
         }
     }
 
