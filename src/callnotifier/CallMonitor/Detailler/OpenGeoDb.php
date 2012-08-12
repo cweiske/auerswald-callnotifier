@@ -85,6 +85,12 @@ class CallMonitor_Detailler_OpenGeoDb implements CallMonitor_Detailler
             . ' OR vorwahl = ' . $this->db->quote(substr($number, 0, 6))
             . ' ORDER BY einwohner DESC'
         );
+        if ($stm === false) {
+            throw new \Exception(
+                implode(' - ', $this->db->errorInfo())
+            );
+        }
+
         $res = $stm->fetch();
         if ($res === false) {
             return null;
