@@ -15,6 +15,10 @@ namespace callnotifier;
 class CallMonitor_Detailler_OpenGeoDb implements CallMonitor_Detailler
 {
     protected $db;
+    protected $dsn;
+    protected $username;
+    protected $password;
+
     protected static $mobile = array(
         '0151' => 'Telekom',
         '0152' => 'Vodafone D2',
@@ -46,11 +50,30 @@ class CallMonitor_Detailler_OpenGeoDb implements CallMonitor_Detailler
      */
     public function __construct($dsn, $username, $password)
     {
+        $this->dsn      = $dsn;
+        $this->username = $username;
+        $this->password = $password;
+        //check if the credentials are correct
+        $this->connect();
+    }
+
+    /**
+     * Connect to the SQL server.
+     * SQL servers close the connection automatically after some hours,
+     * and since calls often don't come in every minute, we will have
+     * disconnects in between.
+     * Thus, we will reconnect on every location load.
+     *
+     * @return void
+     */
+    protected function connect()
+    {
         $this->db = new \PDO(
-            $dsn, $username, $password,
+            $this->dsn, $this->username, $this->password,
             array(
                 \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
-                \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC
+                \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
+                \PDO::ATTR_PERSISTENT => true
             )
         );
     }
@@ -81,6 +104,7 @@ class CallMonitor_Detailler_OpenGeoDb implements CallMonitor_Detailler
 
         //FIXME: what about international numbers?
         //area codes in germany can be 3 to 6 numbers
+        $this->connect();
         $stm = $this->db->query(
             'SELECT name FROM my_orte'
             . ' WHERE vorwahl = ' . $this->db->quote(substr($number, 0, 3))
