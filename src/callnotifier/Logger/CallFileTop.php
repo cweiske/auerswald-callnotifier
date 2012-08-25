@@ -18,7 +18,7 @@ class Logger_CallFileTop extends Logger_CallBase
     protected $file;
 
     /**
-     * Create a new file call logger. 
+     * Create a new file call logger.
      *
      * @param string $file      Path to the file to log the calls in.
      * @param string $callTypes Which types of call to log:
@@ -85,9 +85,18 @@ class Logger_CallFileTop extends Logger_CallBase
         $this->addUnsetVars($call);
         $str = '  ' . date('H:i', $call->start);
         if ($call->type == CallMonitor_Call::INCOMING) {
-            $str .= ' von  ' . str_pad($this->getNumberString($call, 'from'), 30);
+            $prefix = ' von  ';
+            $numstr = $this->getNumberString($call, 'from');
         } else {
-            $str .= ' nach ' . str_pad($this->getNumberString($call, 'to'), 30);
+            $prefix = ' nach ';
+            $numstr = $this->getNumberString($call, 'to');
+        }
+
+        if ($this->callTypes == 'io') {
+            $str .= $prefix;
+            $str .= str_pad($numstr, 20);
+        } else {
+            $str .= '  ' . str_pad($numstr, 25);
         }
 
         $str .= ' ' . date('H:i:s', $call->end - $call->start - 3600);
