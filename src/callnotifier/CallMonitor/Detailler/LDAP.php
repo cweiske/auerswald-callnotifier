@@ -83,7 +83,7 @@ class CallMonitor_Detailler_LDAP implements CallMonitor_Detailler
         $arEntry = $search->shiftEntry()->getValues();
         if (isset($arEntry['displayName'])) {
             return $arEntry['displayName'];
-        } else if (isset($arEntry['sn']) && $arEntry['givenName']) {
+        } else if (isset($arEntry['sn']) && isset($arEntry['givenName'])) {
             return $arEntry['givenName'] . ' ' . $arEntry['sn'];
         } else if (isset($arEntry['cn'])) {
             return $arEntry['cn'];
