@@ -92,7 +92,8 @@ class Logger_CallFileTop extends Logger_CallBase
 
         $str .= ' ' . date('H:i:s', $call->end - $call->start - 3600);
 
-        return array($str . "\n", date("d.m.Y, l\n", $call->start));
+        setlocale(LC_TIME, 'de_DE.utf-8');
+        return array($str . "\n", strftime("%x, %A\n", $call->start));
     }
 
 }
