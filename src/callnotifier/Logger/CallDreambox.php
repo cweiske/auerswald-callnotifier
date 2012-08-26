@@ -5,7 +5,7 @@ class Logger_CallDreambox extends Logger_CallBase
 {
     protected $host;
 
-    public function __construct($host, $callTypes = 'i', $msns = array())
+    public function __construct($host, $callTypes = 'io', $msns = array())
     {
         parent::__construct($callTypes, $msns);
         $this->host = $host;

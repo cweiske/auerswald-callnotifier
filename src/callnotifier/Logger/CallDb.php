@@ -23,7 +23,7 @@ class Logger_CallDb extends Logger_CallBase
      * @param string $password Database password
      */
     public function __construct(
-        $dsn, $username, $password, $callTypes = 'i', $msns = array()
+        $dsn, $username, $password, $callTypes = 'io', $msns = array()
     ) {
         parent::__construct($callTypes, $msns);
 
