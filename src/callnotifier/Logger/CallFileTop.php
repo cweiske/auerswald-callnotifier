@@ -67,8 +67,13 @@ class Logger_CallFileTop extends Logger_CallBase
         if (isset($arLines[0]) && $arLines[0] == $date) {
             //same date as previous log entry
             $arLines = array_pad($arLines, -count($arLines) - 1, '');
+        } else if (!isset($arLines[0])) {
+            //empty file
+            $arLines = array_pad($arLines, -count($arLines) - 2, '');
         } else {
+            //new date
             $arLines = array_pad($arLines, -count($arLines) - 3, '');
+            $arLines[2] = "\n";
         }
         $arLines[0] = $date;
         $arLines[1] = $logline;
