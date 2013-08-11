@@ -99,9 +99,9 @@ class Logger_CallFileTop extends Logger_CallBase
 
         if ($this->callTypes == 'io') {
             $str .= $prefix;
-            $str .= str_pad($numstr, 20);
+            $str .= Functions::mb_str_pad($numstr, 20);
         } else {
-            $str .= '  ' . str_pad($numstr, 25);
+            $str .= '  ' . Functions::mb_str_pad($numstr, 25);
         }
 
         $str .= ' ' . date('H:i:s', $call->end - $call->start - 3600);
