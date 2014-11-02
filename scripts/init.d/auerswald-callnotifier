@@ -1,11 +1,12 @@
 #! /bin/sh
+
 ### BEGIN INIT INFO
 # Provides:          auerswald-callnotifier
-# Required-Start:    $local_fs $network
-# Required-Stop:     $local_fs $network
+# Required-Start:    $local_fs $network $syslog mysql slapd
+# Required-Stop:     $local_fs $network $syslog
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
-# Short-Description: Run the call notification program
+# Short-Description: Call notification program
 ### END INIT INFO
 
 # Author: Christian Weiske <cweiske@cweiske.de>
@@ -13,7 +14,7 @@
 # PATH should only include /usr/* if it runs after the mountnfs.sh script
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
 DESC="Run auerswald callnotifier"
-NAME=callnotifier
+NAME=auerswald-callnotifier
 DAEMON=/usr/bin/php
 DAEMON_ARGS="/usr/local/src/auerswald-callnotifier/callnotifier.php"
 PIDFILE=/var/run/$NAME.pid
@@ -37,10 +38,11 @@ do_start()
 	#   1 if daemon was already running
 	#   2 if daemon could not be started
 	start-stop-daemon --start --background --make-pidfile --pidfile $PIDFILE --exec $DAEMON --test > /dev/null \
-		|| return 1
-	start-stop-daemon --start --background --make-pidfile --pidfile $PIDFILE --exec $DAEMON -- \
-		$DAEMON_ARGS \
-		|| return 2
+	    || return 1
+	start-stop-daemon --start --background --make-pidfile --pidfile $PIDFILE\
+            --startas /bin/bash -- -c "exec $DAEMON $DAEMON_ARGS >> /var/log/$NAME.log 2>&1" \
+	    || return 2
+        #--exec $DAEMON -- $DAEMON_ARGS \
 }
 
 do_stop()
