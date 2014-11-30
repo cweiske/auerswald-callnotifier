@@ -122,10 +122,29 @@ Example configuration::
     );
 
 
-====
-TODO
-====
-- multiple notification methods: XMPP, dreambox, notify-send
+Logger
+======
+Logger handle react on events like incoming or outgoing calls,
+if they start or finish, or on any data received from the ISDN bus.
+
+Available logger:
+
+CallDb
+  Log calls in a SQL database
+CallDreambox
+  Send messages on incoming calls to the DreamBox satellite
+  receiver
+CallEcho
+  Log to the command line. Helpful for debugging.
+CallFile
+  Log finished calls into a text file
+CallFileTop
+  Log finished calls into a text file, newest on top
+CallNotifySend
+  Use the unix ``notify-send`` command on starting and finished calls
+CallSendXmpp
+  Send an XMPP headline message for incoming calls to one or multiple
+  users.
 
 
 ============
