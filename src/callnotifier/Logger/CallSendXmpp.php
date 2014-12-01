@@ -8,7 +8,7 @@ namespace callnotifier;
 class Logger_CallSendXmpp extends Logger_CallBase
 {
     protected $recipients;
-    protected $debug = false;
+    public $debug = false;
 
     public function __construct($recipients, $callTypes = 'i', $msns = array())
     {
@@ -61,19 +61,26 @@ class Logger_CallSendXmpp extends Logger_CallBase
         $runInBackground = ' > /dev/null 2>&1 &';
         if ($this->debug) {
             $runInBackground = '';
-            echo $msg . "\n";
+            echo "Message:\n" . $msg . "\n";
+            echo 'Sending to ' . count((array) $this->recipients)
+                . " recipients\n";
         }
 
         foreach ((array)$this->recipients as $recipient) {
             //use system instead of exec to make debugging possible
-            system(
-                'echo ' . escapeshellarg($msg)
+            $cmd = 'echo ' . escapeshellarg($msg)
                 . ' | sendxmpp'
                 . ' --message-type=headline'//no offline storage
                 . ' --resource callnotifier'
                 . ' ' . escapeshellarg($recipient)
-                . $runInBackground
-            );
+                . $runInBackground;
+            if ($this->debug) {
+                echo "Executing:\n" . $cmd . "\n";
+            }
+            system($cmd, $retval);
+            if ($this->debug) {
+                echo 'Exit code: ' . $retval . "\n";
+            }
         }
     }
 }

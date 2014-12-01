@@ -3,6 +3,7 @@ namespace callnotifier;
 require_once __DIR__ . '/../tests/bootstrap.php';
 
 $l = new Logger_CallSendXmpp('cweiske@cweiske.de', 'i', array('12345'));
+$l->debug = true;
 
 $call = new CallMonitor_Call();
 $call->type  = 'i';
