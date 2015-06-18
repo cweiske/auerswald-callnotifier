@@ -35,6 +35,28 @@ Dependencies
 =============
 Configuration
 =============
+
+Compact 3000
+============
+Enable the debug port by activating
+
+- Configuration
+
+  - Server configuration
+
+    -  D channel output via IP D channel output via IP on/off
+
+German:
+
+- Einrichtung
+
+  - Serverkonfiguration
+
+    - D-Kanal über IP ausgeben D-Kanal über IP ausgeben ein-/ausschalten
+
+
+Callnotifier
+============
 Copy ``data/callnotifier.config.php.dist`` to ``data/callnotifier.config.php``
 (same name, just no ``.dist``), open it in a text editor and adjust it to
 your needs.
