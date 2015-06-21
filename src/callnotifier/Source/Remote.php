@@ -13,9 +13,16 @@ class Source_Remote
 
     public function run()
     {
-        $this->connect($this->config->host, $this->config->port);
-        $this->init();
-        $this->loop();
+        do {
+            try {
+                $tryAgain = false;
+                $this->connect($this->config->host, $this->config->port);
+                $this->init();
+                $this->loop();
+            } catch (\Exception_ConnectionReset $e) {
+                $tryAgain = true;
+            }
+        } while ($tryAgain);
         $this->disconnect();
     }
 
@@ -64,6 +71,11 @@ class Source_Remote
     function read_response()
     {
         $res = socket_read($this->socket, 2048, PHP_NORMAL_READ);
+        if ($res === false) {
+            //handle "Connection reset by peer" that appears nightly since
+            // version 4.0N
+            throw new Exception_ConnectionReset();
+        }
         return substr($res, 2, -1);
     }
 
