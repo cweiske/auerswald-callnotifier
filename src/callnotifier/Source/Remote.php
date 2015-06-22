@@ -19,7 +19,7 @@ class Source_Remote
                 $this->connect($this->config->host, $this->config->port);
                 $this->init();
                 $this->loop();
-            } catch (\Exception_ConnectionReset $e) {
+            } catch (Exception_ConnectionReset $e) {
                 $tryAgain = true;
             }
         } while ($tryAgain);
