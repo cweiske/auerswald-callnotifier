@@ -21,6 +21,9 @@ class Source_Remote
                 $this->loop();
             } catch (Exception_ConnectionReset $e) {
                 $tryAgain = true;
+                //connection is refused directly after a connection reset
+                //hopefully waiting a bit will help
+                sleep(10);
             }
         } while ($tryAgain);
         $this->disconnect();
