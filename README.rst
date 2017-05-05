@@ -32,6 +32,19 @@ Dependencies
 - curl for the dreambox notifier
 
 
+Systemd service
+===============
+
+1. Copy ``scripts/systemd/auerswald-callnotifier.service`` to ``/etc/systemd/system/``
+2. Adjust user and group name and callnotifier path
+3. Enable the service::
+
+    $ systemctl daemon-reload
+    $ systemctl enable auerswald-callnotifier
+    $ systemctl start auerswald-callnotifier
+    $ systemctl status auerswald-callnotifier
+
+
 =============
 Configuration
 =============
@@ -186,6 +199,6 @@ Auerswald callnotifier is licensed under the terms of the GPLv3 or later.
 ======
 Source
 ======
-Original git website: http://git.cweiske.de/?p=auerswald-callnotifier.git
+Original git website: https://git.cweiske.de/auerswald-callnotifier.git
 
 Mirror: https://github.com/cweiske/auerswald-callnotifier

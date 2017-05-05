@@ -1,0 +1,14 @@
+[Unit]
+Description=Auerswald Callnotifier
+After=mysql.target network.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+ExecStart=/usr/local/src/auerswald-callnotifier/callnotifier.php
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
