@@ -3,6 +3,8 @@ namespace callnotifier;
 
 class Log
 {
+    public $debug = false;
+
     /**
      * Array of logger object arrays.
      * Key is the notification type, value is an array of logger objects
@@ -33,6 +35,10 @@ class Log
         }
         $types = (array)$types;
 
+        if ($this->debug) {
+            $logger->debug = $this->debug;
+        }
+
         foreach ($types as $type) {
             if (!isset($this->logger[$type])) {
                 throw new \Exception('Unknown log type: ' . $type);
@@ -46,9 +52,12 @@ class Log
         if (!isset($this->logger[$type])) {
             throw new \Exception('Unknown log type: ' . $type);
         }
-        
+
         if (count($this->logger[$type])) {
             foreach ($this->logger[$type] as $logger) {
+                if ($this->debug) {
+                    echo "Logging to " . get_class($logger) . "\n";
+                }
                 $logger->log($type, $arData);
             }
         }

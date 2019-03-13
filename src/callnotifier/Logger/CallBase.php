@@ -6,6 +6,7 @@ abstract class Logger_CallBase implements Logger
     protected $callTypes;
     protected $msns;
 
+    public $debug = false;
 
     /**
      * Create a new call logger.
@@ -33,9 +34,11 @@ abstract class Logger_CallBase implements Logger
     protected function hasValidType($call)
     {
         if ($call->type == CallMonitor_Call::INCOMING && $this->callTypes == 'o') {
+            $this->debug('No valid call type (requested: o)');
             return false;
         }
         if ($call->type == CallMonitor_Call::OUTGOING && $this->callTypes == 'i') {
+            $this->debug('No valid call type (requested: i)');
             return false;
         }
 
@@ -56,6 +59,7 @@ abstract class Logger_CallBase implements Logger
         }
         if (count($this->msns) > 0 && !in_array($msn, $this->msns)) {
             //msn shall not be logged
+            $this->debug('No valid MSN (requested: ' . $msn . ')');
             return false;
         }
 
@@ -100,6 +104,13 @@ abstract class Logger_CallBase implements Logger
         return str_pad($number, 12, ' ', STR_PAD_RIGHT);
     }
 
+    protected function debug($msg)
+    {
+        if (!$this->debug) {
+            return;
+        }
+        echo $msg . "\n";
+    }
 }
 
 ?>

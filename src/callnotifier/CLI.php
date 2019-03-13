@@ -133,7 +133,7 @@ class CLI
      *
      * @return string Full path of config file or NULL if no file found
      */
-    protected function getConfigFile()
+    public function getConfigFile()
     {
         if (basename(dirname(__DIR__)) == 'src'
             && file_exists(__DIR__ . '/../../data/callnotifier.config.php')

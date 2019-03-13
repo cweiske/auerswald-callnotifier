@@ -54,6 +54,8 @@ class Logger_CallDreambox extends Logger_CallBase
     {
         $url = 'http://' . $this->host
             . '/web/message?type=2&timeout=10&text=' . urlencode($msg);
+        $this->debug('Fetch: ' . $url);
+
         exec(
             'curl'
             . ' ' . escapeshellarg($url)
