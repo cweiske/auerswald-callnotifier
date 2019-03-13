@@ -12,6 +12,8 @@ incoming and/or outgoing calls into a file or a database.
 Callnotifier is able to resolve the names of calls via LDAP and the
 caller location city names via OpenGeoDb.
 
+Blog post: https://cweiske.de/tagebuch/auerswald-callnotifier.htm
+
 .. contents::
 
 
